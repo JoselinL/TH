@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
           mostrarVacacion($('#idusuario1').val());
-          mostrarDisponibilidad($('#idusuario1').val());
+          //mostrarDisponibilidad($('#idusuario1').val());
           
  });
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
@@ -34,6 +34,7 @@ function ingresarVacacion(){
           
             mostrarVacacion();      
             limpiarVacacion();
+            mostrarVacacion($('#idusuario1').val());
         },
         complete: function () {     
            
