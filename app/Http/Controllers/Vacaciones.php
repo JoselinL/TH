@@ -16,6 +16,10 @@ class Vacaciones extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function cargarVacacion()
     {
         $vacacion=Vacacion::with('persona')->get();
@@ -89,8 +93,16 @@ class Vacaciones extends Controller
 
 
 
-    public function buscarVacacion($descripcion=''){ 
-        $vacacion = Vacacion::with(['persona','usuario'])->where('descripcion', 'like', "%$descripcion%")->get();
+    public function buscarVacacion(Request $request){ 
+        //$vacacion = Vacacion::with(['persona','usuario'])->where('descripcion', 'like', "%$descripcion%")->get();
+
+            $vacacion = Vacacion::with('persona','usuario')->where([
+                                                                        ['user_id',$request->user_id],
+                                                                        ['descripcion','like',"%$request->descripcion%"]
+                                                                    ])->get();
+
+       
+        //dd($request);
         return response()->json($vacacion);
      }
 
