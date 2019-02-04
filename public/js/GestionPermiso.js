@@ -247,7 +247,7 @@ function cargarPermisoUsuario(data){
     }else{
         //fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
         //fila+="<td class='row'><button type='button' class='btn btn-danger' onClick='vermensajeObservacion("+data.id+")'><i class='fa fa-file'></i></button></td>";
-        fila+='<td class="row"><button type="button" class="btn btn-primary" onClick="vermensajeObservacion('+data.id+')" data-toggle="modal" data-target=".bd-example-modal-sm"><i class="fa fa-file"></i></button></td>';
+        fila+='<td class="row"><button type="button" class="btn btn-primary" onClick="vermensajeObservacion('+data.id+')" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-file"></i></button></td>';
     }
 
     $("#tablaPermisoUsuario").append(fila);
@@ -544,8 +544,8 @@ function vermensajeObservacion(_id) {
     //$('#txtmensajeObservacion').val();
     //alert(_id);
     $.get('getObservacion/'+_id,function (data) {
-        $('#txtmensajeObservacion').prop('value',data);
-        //alert(data.observacion);
+        $('#txtmensajeObservacion').html(data);
+        //alert(data);
         //alert(_id);
     });
     // $('#mensajeObservacion').modal('show');    
