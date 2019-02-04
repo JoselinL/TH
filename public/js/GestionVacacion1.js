@@ -143,26 +143,71 @@ function cargarVacacion(data){
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacion("+data.id+")'><i class='fa fa-trash'></i></button></td>"
     );
 }
+ 
+$( "#B_Vacacion" ).keyup(function() {
 
-$( "#B_Vacacion" ).change(function() {
-   //alert($( "#dtpFecha" ).val());
-   $.get('buscarVacacion/'+$('#B_Vacacion').val() , function (data) { //ruta que especifica que metodo ejecutar en resource
-              // limpia el tbody de la tabla
-              //alert(2); 
-              $('#tablaVacacion').html('');
-             $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
-               $("#tablaVacacion").append(
-                      "<tr id='"+item.id+"'>"+
-                      "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
-                       "<td>"+ item.descripcion+"</td>"+
-                       "<td>"+ item.fechaInicio+"</td>"+
-                       "<td>"+ item.fechaFin+"</td>"+
-                       "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacion' onClick='actualizarVacacion("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
-                       "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacion("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
-                );
-                
-         }); 
+
+    var FrmData = {
+        descripcion: $('#B_Vacacion').val(),
+        user_id: $('#idusuario1').val(),
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
+    $.ajax({
+        url: 'buscarVacacion/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+        method:"GET",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+            //console.log(data)
+            $("#tablaVacacion").html('');
+             $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+                //console.log(item.descripcion);
+                var fila='';
+                fila+= "<tr id='"+item.id+"'>";
+                fila+="<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>";
+                fila+="<td>"+ item.descripcion+"</td>";
+                fila+="<td>"+ item.fechaInicio+"</td>";
+                fila+="<td>"+ item.fechaFin+"</td>";
+                fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacion' onClick='actualizarVacacion("+item.id+")'><i class='fa fa-refresh'></i></button></td>";
+                fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacion("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>";
+                
+                $("#tablaVacacion").append(fila);
+                                
+             }); 
+        },
+        complete: function () {     
+        
+        },
+        error: function () {
+            
+        }
+    });
+
+
+    //alert('ssss');
+   //alert($( "#dtpFecha" ).val());
+//    $.get('buscarVacacion/'+$('#B_Vacacion').val() , function (data) { //ruta que especifica que metodo ejecutar en resource
+//               // limpia el tbody de la tabla
+//               //alert(2); 
+//               $('#tablaVacacion').html('');
+//              $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+//                $("#tablaVacacion").append(
+//                       "<tr id='"+item.id+"'>"+
+//                       "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
+//                        "<td>"+ item.descripcion+"</td>"+
+//                        "<td>"+ item.fechaInicio+"</td>"+
+//                        "<td>"+ item.fechaFin+"</td>"+
+//                        "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacion' onClick='actualizarVacacion("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
+//                        "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacion("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
+//                 );
+                
+//          }); 
+//     });
 });
 
 
