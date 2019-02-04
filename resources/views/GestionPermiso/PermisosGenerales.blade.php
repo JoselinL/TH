@@ -14,6 +14,7 @@
                     <input type="hidden" name="" id="idusuario_">
                   @else
                     <input type="hidden" name="" value="{{ Auth::user()->id }}" id="idusuario_">
+                    <input type="hidden" name="idPermiso_g"id="idPermiso_g">
                   @endguest
 
                   @if (count($errors) > 0)
@@ -67,7 +68,7 @@
       <div>
      </div>
   </div>
-  
+  @include('GestionPermiso.observacionPermiso_modal')
 @endsection
                                  
             <script>

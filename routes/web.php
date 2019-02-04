@@ -72,6 +72,10 @@ Route::get('/listarPermisoUsuario/{idusuario}','Permisos@listarPermisoUsuario');
 Route::post('/modificarPermiso/{frmData}', 'Permisos@modificarPermiso');  
 Route::get('/listarPermisoGeneral','Permisos@listarPermisoGeneral');
 Route::get('/certificado/{idpdf}','Permisos@cargarPDF');
+
+Route::post('/addObservacion/{data}','Permisos@addObservacion');
+Route::get('/getObservacion/{data}','Permisos@getObservacion');
+
 //-----------------------------------------------------------------------
 
 

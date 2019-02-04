@@ -240,12 +240,14 @@ function cargarPermisoUsuario(data){
     fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermisoUsuario' onClick='actualizarPermisoUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
     fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermisoUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td>";
     
+    
     if (data.estado==2) {
-        fila+="<td class='row'><button type='button' class='btn btn-success'><a href='certificado' class='fa fa-file-pdf-o '></a></button></td>";
-
+            fila+="<td class='row'><button type='button' class='btn btn-success' data-toggle='modal' data-target='#addObservacionPermiso'><a href='certificado' class='fa fa-file-pdf-o '></a></button></td>";
+    
     }else{
-        fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
-
+        //fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
+        //fila+="<td class='row'><button type='button' class='btn btn-danger' onClick='vermensajeObservacion("+data.id+")'><i class='fa fa-file'></i></button></td>";
+        fila+='<td class="row"><button type="button" class="btn btn-primary" onClick="vermensajeObservacion('+data.id+')" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-file"></i></button></td>';
     }
 
     $("#tablaPermisoUsuario").append(fila);
@@ -392,22 +394,42 @@ function mostrarPermisoGeneral(){
 
 
 function cargarPermisoGeneral(data){
-    $("#tablaPermisoGeneral").append(
-        "<tr id='fila_cod"+"'>\
-         <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
-         <td>"+ data.descripcion +"</td>\
-         <td>"+ data.fechaInicio +"</td>\
-         <td>"+ data.fechaFin +"</td>\
-         <td>"+ data.horaInicio +"</td>\
-         <td>"+ data.horaFin +"</td>\
-         <td class='row'><button type='button' class='btn btn-info' onClick=''><i class='fa fa-eye'></i></button></td>\
-         <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
-         <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
-    );
+    var fila ="";
+    fila+="<tr>";
+    fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
+    fila+="<td>"+ data.descripcion +"</td>";
+    fila+="<td>"+ data.fechaInicio +"</td>";
+    fila+=" <td>"+ data.fechaFin +"</td>";
+    fila+="<td>"+ data.horaInicio +"</td>";
+    fila+="<td>"+ data.horaFin +"</td>";
+    fila+="<td class='row'><button type='button' class='btn btn-info'><i class='fa fa-eye'></i></button></td>";
+    if (data.estado<2) {
+        fila+="<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>";    
+        fila+="<td class='row'><button type='button' class='btn btn-danger' onClicK='verModalReprobarPermiso("+data.id+")'><i class='fa fa-close'></i></button></td>";
+    
+    }else{
+        fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-check'></i></button></td>";            
+        fila+="<td class='row'><button type='button' class='btn btn-danger' disabled><i class='fa fa-close'></i></button></td>";        
+    }
+    
+
+    $("#tablaPermisoGeneral").append(fila);
+    // $("#tablaPermisoGeneral").append(
+    //     "<tr id='fila_cod"+"'>\
+    //      <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
+    //      <td>"+ data.descripcion +"</td>\
+    //      <td>"+ data.fechaInicio +"</td>\
+    //      <td>"+ data.fechaFin +"</td>\
+    //      <td>"+ data.horaInicio +"</td>\
+    //      <td>"+ data.horaFin +"</td>\
+    //      <td class='row'><button type='button' class='btn btn-info' onClick=''><i class='fa fa-eye'></i></button></td>\
+    //      <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
+    //      <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
+    // );
 }
 
 function AprobarPermiso(_id){
-  
+    //alert('yupi');
   var FrmData ={
     idPermiso: _id,
     idusuario: $('#idusuario_').val(),
@@ -423,9 +445,12 @@ function AprobarPermiso(_id){
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
+            //alert(data.di);
             mostrarPermisoGeneral();
-            if (data=='Y') {
-                //alert("Haz aprobado este permiso")
+            if (data.estado<2) {
+                alert("Haz aprobado este permiso");
+            }if(data.estado==2){
+                alert("El pemiso ya ha sido consedido");
             }
         },
         complete: function () {     
@@ -444,25 +469,81 @@ $( "#B_PermisoGeneral" ).change(function() {
               //alert(2); 
               $('#tablaPermisoGeneral').html('');
              $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
-               $("#tablaPermisoGeneral").append(
-                       "<tr id='"+item.id+"'>"+
-                       "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
-                       "<td>"+ item.descripcion+"</td>"+
-                       "<td>"+ item.fechaInicio+"</td>"+
-                       "<td>"+ item.fechaFin+"</td>"+
-                       "<td>"+ item.horaInicio+"</td>"+
-                       "<td>"+ item.horaFin+"</td>"+
-                       "<td class='row'><button type='button' class='btn btn-info' onClick=''><i class='fa fa-eye'></i></button></td>"+
-                       "<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>"+
-                       "<td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"  
+                cargarPermisoGeneral(data);
+            //    $("#tablaPermisoGeneral").append(
+            //            "<tr id='"+item.id+"'>"+
+            //            "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
+            //            "<td>"+ item.descripcion+"</td>"+
+            //            "<td>"+ item.fechaInicio+"</td>"+
+            //            "<td>"+ item.fechaFin+"</td>"+
+            //            "<td>"+ item.horaInicio+"</td>"+
+            //            "<td>"+ item.horaFin+"</td>"+
+            //            "<td class='row'><button type='button' class='btn btn-info' onClick=''><i class='fa fa-eye'></i></button></td>"+
+            //            "<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>"+
+            //            "<td class='row'><button type='button' class='btn btn-danger' onClick='verModalReprobarPermiso("+data.id+")'><i class='fa fa-close'></i></button></td>"  
                                             
 
-                );
+            //     );
                 
          }); 
     });
 });
 
+function verModalReprobarPermiso(_id) {
+    //alert("jo");
+    $('#idPermiso_g').val(_id);
+    //alert($('#idPermiso_g').val());
+    $.get('getObservacion/'+_id,function (data) {
+        $('#txtObservacionPermiso').val(data);
+    });
+    //getObservacion
 
+    $('#addObservacionPermiso').modal('show');
+    
+    
+}
+$('#GuardarObservacion').on('click',function () {
+    var FrmData ={
+        idPermiso: $('#idPermiso_g').val(),
+        idusuario: $('#idusuario_').val(),
+        observacion: $('#txtObservacionPermiso').val(),
+    }
+    
+    //alert(FrmData.idPermiso);//+" ;idusuario: "+FrmData.idusuario+" ;observacion: "+FrmData.observacion);
+    
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: 'addObservacion/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+            //alert('ok');
+            $('#addObservacionPermiso').modal('hide');
+        },
+        complete: function () {     
+           
+        },
+        error:function () {
+            
+        }
+    });    
+});
 
+function vermensajeObservacion(_id) {
+    //$('#txtmensajeObservacion').val();
+    //alert(_id);
+    $.get('getObservacion/'+_id,function (data) {
+        $('#txtmensajeObservacion').html(data);
+        //alert(data);
+        //alert(_id);
+    });
+    // $('#mensajeObservacion').modal('show');    
+
+     
+}

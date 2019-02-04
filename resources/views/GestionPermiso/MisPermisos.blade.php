@@ -67,7 +67,14 @@
       <div>
      </div>
   </div>
+  
+  <div>
+        @include('GestionPermiso.mensajeObservacion_modal')
+  </div>
   @include('GestionPermiso.ModalPermisoUsuario')
+
+  
+  
 @endsection
                                  
             <script>
