@@ -1,7 +1,7 @@
 <div class="modal-body">
   <form id="formregistromodal"  method="post"> 
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <input type="text" name="id" id="idUsuario1" hidden >
+    <input type="text" name="id"  hidden >
         <div class="row">
         
         <div class="col-md-4">

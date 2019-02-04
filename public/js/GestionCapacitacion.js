@@ -1,41 +1,49 @@
-$(document).ready(function()
-{
-          mostrarCapacitacion($('#idusuarioC').val());
- });
+// $(document).ready(function()
+// {
+//           mostrarCapacitacion($('#idusuarioC').val());
+//  });
+window.onload=function(){
+   mostrarCapacitacion($('#idusuarioH').val());
+}
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
-function ingresarCapacitacion(){ 
-    //Datos que se envian a la ruta
-    var FrmData = {
-        descripcion: $('#descripcionCap').val(),
-        documento: $('#documentoCap').val(),
-        fechaInicio: $('#fechaIniCap').val(),
-        fechaFin: $('#fechaFiniCap').val(),
-        tipoCapacitacion_id: $('#tipcapId').val(),
-        user_id: $('#idusuarioC').val(),
-    }
+$('#form_cap').on('submit',function(e){
+
+e.preventDefault();
+alert("hola");
+});
+// function ingresarCapacitacion(){ 
+//     //Datos que se envian a la ruta
+//     var FrmData = {
+//         descripcion: $('#descripcionCap').val(),
+//         documento: $('#documentoCap').val(),
+//         fechaInicio: $('#fechaIniCap').val(),
+//         fechaFin: $('#fechaFiniCap').val(),
+//         tipoCapacitacion_id: $('#tipcapId').val(),
+//         user_id: $('#idusuarioC').val(),
+//     }
     
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        url: 'capacitacion', // Url que se envia para la solicitud esta en el web php es la ruta
-        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
-        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-        {
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//     $.ajax({
+//         url: 'capacitacion', // Url que se envia para la solicitud esta en el web php es la ruta
+//         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+//         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+//         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+//         {
            
             
           
-            mostrarCapacitacion();      
-            limpiarCapacitacion();
-        },
-        complete: function () {     
+//             mostrarCapacitacion();      
+//             limpiarCapacitacion();
+//         },
+//         complete: function () {     
            
-        }
-    });  
-}
+//         }
+//     });  
+//}
 
 
 /*MOSTRAR TODOS LOS EMPLEADOS*/
@@ -62,7 +70,7 @@ function eliminarCapacitacion(id){
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {   
-          mostrarCapacitacion($('#idusuarioC').val()); // carga los datos en la tabla                       
+          mostrarCapacitacion($('#idusuarioH').val()); // carga los datos en la tabla                       
         }
     });
 }
@@ -78,7 +86,7 @@ function actualizarCapacitacion(id){
         $('#fecIniCapacitacion').val(data.fechaInicio);
         $('#fechFinCapacitacion').val(data.fechaFin);
         $('#tipoCapa_id').val(data.tipocapacitacion.id);
-        $('#idusuarioC').val(data.usuario.id);
+        $('#idusuarioH').val(data.usuario.id);
     });
 }
 
@@ -92,7 +100,7 @@ function updateCapacitacion(){
         fechaInicio: $('#fecIniCapacitacion').val(),
         fechaFin: $('#fechFinCapacitacion').val(),
         tipoCapacitacion_id: $('#tipoCapa_id').val(),
-        user_id: $('#idusuarioC').val(),
+        user_id: $('#idusuarioH').val(),
 
     }
     $.ajaxSetup({
@@ -107,7 +115,7 @@ function updateCapacitacion(){
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
             console.log(data);
-            mostrarCapacitacion($('#idusuarioC').val()); 
+            mostrarCapacitacion($('#idusuarioH').val()); 
             limpiarCapacitacion();
         },
         

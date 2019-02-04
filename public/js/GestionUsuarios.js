@@ -342,7 +342,7 @@ function verUsuario(){
    //$('#nomUsuarioN').val('hola');
 
    var id= $('#idusuarioH').val();
-
+  
    // $.ajaxSetup({
    //      headers: {
    //          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

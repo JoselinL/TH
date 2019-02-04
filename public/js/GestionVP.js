@@ -35,12 +35,12 @@ function ingresarVP(){
 
 /*MOSTRAR TODOS LOS EMPLEADOS*/
 function mostrarVP(){
-    $.get('listarVP/', function (data) {   //Ruta de listar
-        $("#tablaVP").html("");
-        $.each(data, function(i, item) { //recorre el data 
-            cargarVP(item); // carga los datos en la tabla
-        });      
-    });
+    //$.get('listarVP/', function (data) {   //Ruta de listar
+        //$("#tablaVP").html("");
+        //$.each(data, function(i, item) { //recorre el data 
+            //cargarVP(item); // carga los datos en la tabla
+        //});      
+   // });
 }
 
 function eliminarVP(id){

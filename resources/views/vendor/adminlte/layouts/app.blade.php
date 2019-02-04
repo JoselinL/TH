@@ -117,7 +117,11 @@ desired effect
             @yield('main-content')
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-
+    @guest
+      <input type="hidden" name="" id="idusuarioH">
+    @else
+      <input type="hidden" name="" value="{{ Auth::user()->id }}" id="idusuarioH">
+    @endguest
     @include('adminlte::layouts.partials.controlsidebar')
 
     @include('adminlte::layouts.partials.footer')

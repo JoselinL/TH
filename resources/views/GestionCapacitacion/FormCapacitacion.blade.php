@@ -10,7 +10,7 @@
 </div>
 @endif 
 
-<form role="form" method="POST" enctype="multipart/form-data">
+<form role="form_cap" method="POST" enctype="multipart/form-data">
 
     {{ csrf_field() }} <!-- Para validar el token -->
 
@@ -88,5 +88,5 @@
 
             <input type="hidden" name="" id="idusuarioC">
 
-    <button type="button" class="btn btn-primary" onclick="ingresarCapacitacion()">Guardar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
 </form>

@@ -11,11 +11,7 @@
                       <a href="{{ url('/home') }}"><b>Help</b>Desk</a>
                   </div> -->
 
-                   @guest
-                    <input type="hidden" name="" id="idusuarioH">
-                  @else
-                    <input type="hidden" name="" value="{{ Auth::user()->id }}" id="idusuarioH">
-                  @endguest
+                  
 
                   @if (count($errors) > 0)
                       <div class="alert alert-danger">
