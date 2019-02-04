@@ -35,7 +35,7 @@
                     <div class="panel ">
                     <legend class="text-center header">
                         <span class=" text-center"></span>
-                        <span> <b>LISTADO DE USUARIOS DEL SISTEMA</b> </span> 
+                        <span> <h2><b>LISTADO DE USUARIOS DEL SISTEMA</b></h2> </span> 
                     </legend>
                         <div class="panel-body"> 
                                 @if(isset($edit))

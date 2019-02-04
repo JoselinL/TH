@@ -187,7 +187,7 @@ $( "#B_Permiso" ).change(function() {
 });
 
 
-//----------------------PERMISOS INDIVIDUALES
+//----------------------------------------------------------PERMISOS INDIVIDUALES
 
 function mostrarPermisoUsuario(id){
     $.get('listarPermisoUsuario/'+id, function (data) {   //Ruta de listar
@@ -375,12 +375,7 @@ $( "#B_PermisoIndividual" ).change(function() {
 
 
 
-
-
-
-
-
-//-------------------PERMISOS GENERALES
+//------------------------------------------------PERMISOS GENERALES
 
 function mostrarPermisoGeneral(){
     $.get('listarPermisoGeneral/', function (data) {   //Ruta de listar

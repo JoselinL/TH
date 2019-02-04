@@ -33,7 +33,7 @@
                 <select class="form-control" name="periodo_id" id="periodoIDPP">
                     @foreach($periodo as $p)
                
-                <option value="{{ $p->id }}"><?php echo $p->fechaInicio.'  -  '.$p->fechaFin ?></option>
+                        <option value="{{ $p->id }}">{{ $p->descripcion }}</option>
           
                     @endforeach
                  </select>

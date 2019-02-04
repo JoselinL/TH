@@ -2,6 +2,8 @@ $(document).ready(function()
 {
           mostrarVacacion($('#idusuario1').val());
           //mostrarDisponibilidad($('#idusuario1').val());
+          mostrarVacacionIndividual($('#idusuario1').val());
+          mostrarVacacionGeneral();
           
  });
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
@@ -232,11 +234,206 @@ $( "#B_Vacacion" ).keyup(function() {
                 $('#tablaD').append(
                     '<tr>'+
                         '<td>'+item.vacacion.usuario.nombres+' '+item.vacacion.usuario.apellidos+'</td>'+
-                        '<td >'+item.periodo.fechaInicio+"-"+ item.periodo.fechaFin +'</td>'+
+                        '<td >'+item.periodo.descripcion+'</td>'+
                         '<td>'+item.cantidad+'</td>'
                 );
          });
         }); 
     }
 
+
+ ////////////////////////////VACACIONES INDIVIDUALES
+ function mostrarVacacionIndividual(id){
+    $.get('listarVacacionIndividual/'+id, function (data) {   //Ruta de listar
+        $("#tablaVacacionUsuario").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarVacacionIndividual(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
+
+function cargarVacacionIndividual(data){
  
+    var fila='';
+
+    fila+='<tr>';
+    fila+='<td>'+ data.usuario.nombres+' '+ data.usuario.apellidos+'</td>';
+    fila+='<td>'+ data.descripcion +'</td>';
+    fila+='<td>'+ data.fechaInicio +'</td>';
+    fila+='<td>'+ data.fechaFin +'</td>';
+    fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacionIndividual' onClick='actualizarVacacionIndividual("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
+    fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacionIndividual("+data.id+")'><i class='fa fa-trash'></i></button></td>";
+    
+    if (data.estado==2) {
+        fila+="<td class='row'><button type='button' class='btn btn-success'><a href='certificado' class='fa fa-file-pdf-o '></a></button></td>";
+
+    }else{
+        fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
+
+    }
+
+    $("#tablaVacacionUsuario").append(fila);
+
+
+
+    // $("#tablaPermisoUsuario").append(
+    //     "<tr id='fila_cod"+"'>\
+    //      <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
+    //      <td>"+ data.descripcion +"</td>\
+    //      <td>"+ data.fechaInicio +"</td>\
+    //      <td>"+ data.fechaFin +"</td>\
+    //      <td>"+ data.horaInicio +"</td>\
+    //      <td>"+ data.horaFin +"</td>\
+    //      <td>"+ data.justificacion +"</td>\
+    //      <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermisoUsuario' onClick='actualizarPermisoUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
+    //      <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermisoUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td>\
+    //      <td class='row'><button type='button' class='btn btn-success' data-toggle='modal' data-target='#certificadoUsuario' onClick='certificadoUsuario("+data.id+")'><i class='fa fa-file-pdf-o '></i></button></td>"
+    // );
+}
+
+
+function actualizarVacacionIndividual(id){ 
+    //alert(id);
+    $.get('actualizarVacacion/'+id,function(data){
+        
+        $('#idVacacion1').val(data.id);
+        $('#descVacacion').val(data.descripcion);
+        $('#fecIniVacacion').val(data.fechaInicio);
+        $('#fechFinVacacion').val(data.fechaFin);
+        $('#fechAprobJefeVacacion').val(data.fechaAprobacionJefe);
+        $('#fechAprobTTHHVacacion').val(data.fechaAprobacionTTHH);
+        $('#estadoVacacion').val(data.estado);
+        $('#idusuario1').val(data.usuario.id);
+    });
+}
+
+
+/*PARA ACTUALIZAR LOS DATOS DEL USUARIO*/
+function updateVacacionIndividual(){ 
+   var FrmData = {
+        idVacacion: $('#idVacacion1').val(),
+        descripcion: $('#descVacacion').val(),
+        fechaInicio: $('#fecIniVacacion').val(),
+        fechaFin: $('#fechFinVacacion').val(),
+        fechaAprobacionJefe: $('#fechAprobJefeVacacion').val(),
+        fechaAprobacionTTHH: $('#fechAprobTTHHVacacion').val(),
+        estado: $('#estadoVacacion').val(),
+        user_id: $('#idusuario1').val(),
+
+    }
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: 'vacaciones/'+ $('#idVacacion').val(), // Url que se envia para la solicitud esta en el web php es la ruta
+        method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+            console.log(data);
+            mostrarVacacionIndividual($('#idusuario1').val()); 
+            limpiarVacacion();
+        },
+        
+    });  
+}
+
+
+function eliminarVacacionIndividual(id){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var FrmData ;
+    $.ajax({
+        url: 'vacaciones/'+id, // Url que se envia para la solicitud esta en el web php es la ruta
+        method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {   
+          mostrarVacacionIndividual($('#idusuario1').val());                      
+        }
+    });
+}
+
+
+$( "#B_VacacionIndividual" ).change(function() {
+   //alert($( "#dtpFecha" ).val());
+   $.get('buscarVacacion/'+$('#B_VacacionIndividual').val() , function (data) { //ruta que especifica que metodo ejecutar en resource
+              // limpia el tbody de la tabla
+              //alert(2); 
+              $('#tablaVacacionUsuario').html('');
+             $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+               $("#tablaVacacionUsuario").append(
+                       "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
+                       "<td>"+ item.descripcion+"</td>"+
+                       "<td>"+ item.fechaInicio+"</td>"+
+                       "<td>"+ item.fechaFin+"</td>"+
+                       "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacionIndividual' onClick='actualizarVacacionIndividual("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
+                       "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacionIndividual("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
+                );
+                
+         }); 
+    });
+});
+
+
+
+
+//-------------------------------------------------VACACIONES GENERALES
+
+function mostrarVacacionGeneral(){
+    $.get('listarVacacionGeneral/', function (data) {   //Ruta de listar
+        $("#tablaVacacionGeneral").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarVacacionGeneral(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
+
+/*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
+
+
+function cargarVacacionGeneral(data){
+    $("#tablaVacacionGeneral").append(
+        "<tr id='fila_cod"+"'>\
+         <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
+         <td>"+ data.descripcion +"</td>\
+         <td>"+ data.fechaInicio +"</td>\
+         <td>"+ data.fechaFin +"</td>\
+         <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
+         <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
+    );
+}
+
+
+$( "#B_VacacionGeneral" ).change(function() {
+   //alert($( "#dtpFecha" ).val());
+   $.get('buscarVacacion/'+$('#B_VacacionGeneral').val() , function (data) { //ruta que especifica que metodo ejecutar en resource
+              // limpia el tbody de la tabla
+              //alert(2); 
+              $('#tablaVacacionGeneral').html('');
+             $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+               $("#tablaVacacionGeneral").append(
+                       "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
+                       "<td>"+ item.descripcion+"</td>"+
+                       "<td>"+ item.fechaInicio+"</td>"+
+                       "<td>"+ item.fechaFin+"</td>"+
+                       "<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>"+
+                       "<td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"  
+                                            
+
+                );
+                
+         }); 
+    });
+});

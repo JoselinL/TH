@@ -52,7 +52,7 @@
                     <div class="panel ">
                     <legend class="text-center header">
                         <span class=" text-center"></span>
-                        <span> <b>PERIODOS-PERSONAS</b></span> 
+                        <span> <b>PERIODO-PERSONA</b></span> 
                     </legend>
                         <div class="panel-body"> 
                                 @if(isset($edit))

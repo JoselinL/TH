@@ -113,7 +113,7 @@ function cargarPP(data){
     $("#tablaPP").append(
         "<tr id='fila_cod"+"'>\
          <td>"+ data.cantidadDiasPeriodo+"</td>\
-         <td>"+ data.periodo.fechaInicio+" - "+ data.periodo.fechaFin+"</td>\
+         <td>"+ data.periodo.descripcion+"</td>\
          <td>"+ data.persona.cedula+"</td>\
          <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPP' onClick='actualizarPP("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPP("+data.id+")'><i class='fa fa-trash'></i></button></td>"

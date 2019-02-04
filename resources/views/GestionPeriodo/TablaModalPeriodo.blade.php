@@ -27,7 +27,7 @@
         </div>
 
 
-        <div class="col-md-4">
+       <!--  <div class="col-md-4">
              <div class="form-group has-feedback">
                 <label> <b>Estado:</b></label>
                 <select class="form-control" id="estadoPeriodo" name="estado" >
@@ -35,7 +35,7 @@
                         <option>Activo</option>
                 </select>
               </div>
-        </div>
+        </div> -->
 
 
       <div class="modal-footer">

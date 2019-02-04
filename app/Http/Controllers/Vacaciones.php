@@ -111,6 +111,23 @@ class Vacaciones extends Controller
 
 
 
+    public function listarVacacionGeneral()
+    {
+        $vacacionvar = Vacacion::with(['persona', 'usuario'])->get();
+        return response()->json($vacacionvar);
+    }
+
+
+
+    public function listarVacacionIndividual($idusuario1)
+    {
+
+        $vacacionvar = Vacacion::with(['usuario'])->where('user_id',$idusuario1)
+        ->get();       
+         return response()->json($vacacionvar);
+    }
+
+
     public function buscarVacacion(Request $request){ 
         //$vacacion = Vacacion::with(['persona','usuario'])->where('descripcion', 'like', "%$descripcion%")->get();
 

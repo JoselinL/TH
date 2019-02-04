@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-4">
     <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Buscar....." id="B_VacacionIndividual">
+        <input type="text" class="form-control" placeholder="Buscar....." id="B_VacacionGeneral">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1"></span>
@@ -19,12 +19,10 @@
                <th scope="col">Descripción</th>      
                <th scope="col">Fecha inicio</th>   
                <th scope="col">Fecha fin</th>
-               <th scope="col">Modificar</th>
-               <th scope="col">Eliminar</th>
-               <th scope="col">Certificado</th>
-
+               <th scope="col">Aprobar</th> 
+               <th scope="col">No Aprobar</th>
            </thead>
-           <tbody id="tablaVacacionUsuario"></tbody>
+           <tbody id="tablaVacacionGeneral"></tbody>
         
     </table>
 </div> 

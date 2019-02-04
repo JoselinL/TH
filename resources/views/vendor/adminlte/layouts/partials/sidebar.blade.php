@@ -138,11 +138,11 @@
 
                     @if(Auth::user()->tipoUsuario_id=='1' || Auth::user()->tipoUsuario_id=='3' || Auth::user()->tipoUsuario_id=='4')
 
-                    <li><a href="{{ url('/') }}"><i class='fa fa-pencil-square'></i>Vacacciones Generales</a></li>
+                    <li><a href="{{ url('/vacacionesgenerales') }}"><i class='fa fa-pencil-square'></i>Vacacciones Generales</a></li>
 
                      @endif
 
-                    <li><a href="{{ url('/') }}"><i class='fa fa-pencil-square'></i>Mis Vacaciones</a></li>
+                    <li><a href="{{ url('/misvacaciones') }}"><i class='fa fa-pencil-square'></i>Mis Vacaciones</a></li>
                 </ul>
             </li>
 

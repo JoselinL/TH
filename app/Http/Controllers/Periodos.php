@@ -48,13 +48,26 @@ class Periodos extends Controller
         $periodo->descripcion = $request->descripcion;
         $periodo->fechaInicio = date("Y-m-d", strtotime(request('fechaInicio')));
         $periodo->fechaFin = date("Y-m-d", strtotime(request('fechaFin')));
-        $periodo->estado = $request->estado;
+        $periodo->estado = 'Activo';
 
         if ($periodo->save()) {
+            # code...
+            $periodos = Periodo::all();
+            foreach ($periodos as $item) {
+                # code...
+                //$item->estado=;
+                if ($periodo->id != $item->id) {
+                    # code...
+                    $periodoM = Periodo::find($item->id);
+                    $periodoM->estado = "Inactivo";
+                    $periodoM->update();
+                }
+               
+            }
             return response()->json($periodo);
-        } else {
-            return back()->with('errormsj', '¡Error al guardar los datos!');
+
         }
+        
     }
 
     /**
@@ -113,7 +126,7 @@ class Periodos extends Controller
         $periodo->descripcion = $request->descripcion;
         $periodo->fechaInicio = date("Y-m-d", strtotime(request('fechaInicio')));
         $periodo->fechaFin = date("Y-m-d", strtotime(request('fechaFin')));
-        $periodo->estado = $request->estado;
+        
 
         $periodo->save();
         return response()->json($periodo);

@@ -83,13 +83,17 @@ Route::get('/listarMarcacion','Marcaciones@listarMarcacion');
 //-----------------------------------------------------------------------
 
 
-//------------------------------------------------------------VACACION
+//--------------------------------------------------------------------------------VACACION
 Route::resource('/vacaciones', 'Vacaciones');
 Route::get('/vacaciones', 'Vacaciones@index');
+Route::get('/misvacaciones', 'Vacaciones@indexVacacionIndividual');
+Route::get('/vacacionesgenerales', 'Vacaciones@indexVacacionGeneral');
 Route::get('/buscarVacacion/{descripcion?}','Vacaciones@buscarVacacion');
 Route::get('/actualizarVacacion/{id}','Vacaciones@actualizarVacacion');
 Route::get('/listarVacacion/{idusuario1}','Vacaciones@listarVacacion');
-//--------------------------------------------------------------------
+Route::get('/listarVacacionIndividual/{idusuario1}','Vacaciones@listarVacacionIndividual');
+Route::get('/listarVacacionGeneral','Vacaciones@listarVacacionGeneral');
+//-----------------------------------------------------------------------------------------
 
 
 //------------------------------------------------------PERIODO-PERSONA

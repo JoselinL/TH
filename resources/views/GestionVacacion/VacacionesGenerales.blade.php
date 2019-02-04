@@ -11,9 +11,9 @@
                       <a href="{{ url('/home') }}"><b>Help</b>Desk</a>
                   </div> -->
                   @guest
-                    <input type="hidden" name="" id="idusuario_">
+                    <input type="hidden" name="" id="idusuario1">
                   @else
-                    <input type="hidden" name="" value="{{ Auth::user()->id }}" id="idusuario_">
+                    <input type="hidden" name="" value="{{ Auth::user()->id }}" id="idusuario1">
                   @endguest
 
                   @if (count($errors) > 0)
@@ -40,12 +40,12 @@
                     <div class="panel ">
                     <legend class="text-center header">
                         <span class=" text-center"></span>
-                        <span> <b>PERMISOS GENERALES</b> </span> 
+                        <span> <b>VACACIONES GENERALES</b> </span> 
                     </legend>
                         <div class="panel-body"> 
                                 @if(isset($edit))
                                 @else
-                                    @include('GestionPermiso.TablaPermisosGenerales')
+                                    @include('GestionVacacion.FormVacacionesGenerales')
                                 @endif
                         </div>
                     </div>
