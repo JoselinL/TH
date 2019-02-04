@@ -1,31 +1,93 @@
 <!DOCTYPE html>
-<html>
-<table class="table table-bordered" style="margin: 0 auto;" border="2px solid;">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+  .titulo {
+   text-align:center;
+  
+   }
 
-  <tr>
-	 <th colspan="6"><img src="municipio.jpg" width="350px" height="50px"/></th>
-	 <th id="gris" colspan="8" style="font-size:160%;"><u>Usuarios del sistema</u></th>
-  </tr>
+   .titulo2 {
+   text-align:center;
+   font-weight:bold;
+   font-size:22px;
+   font-family: Times New Roman;
+   }
 
- 
-  	<tr>
-      <th colspan="6" align="center">C.I.</th>
-      <th colspan="6" align="center">Nombres</th>
-      <th colspan="6" align="center">Apellidos</th>
-    </tr>
+   .subtitulo {
+   text-align:center;
+   font-weight:bold;
+   font-size:20px;
+   font-family: Times New Roman;
+   }
 
-  <tbody>
-  	@foreach($usuario as $u)
-    <tr>
-      <td colspan="6" align="center">{{ $u->cedula }}</td>
-      <td colspan="6" align="center">{{ $u->nombres }}</td>
-      <td colspan="6" align="center">{{ $u->apellidos }}</td>
-    </tr>
-    @endforeach
-    
-  </tbody>
+   .subtitulo1 {
+   text-align:center;
+   font-weight:bold;
+   font-size:20px;
+   font-family: Times New Roman;
+   }
+
+   .subtitulo2 {
+   text-align:center;
+   font-weight:bold;
+   font-size:20px;
+   font-family: Times New Roman;
+   }
+
+   .datos {
+    text-align:justify; 
+    font-size:15px;
+    font-family: Arial;
+
+   }
+
+</style>
+  
+</head>
+<body>
+
+<div class="container">            
+  <table class="table table-bordered">
+    <div >
+       <tr >
+        <td colspan="3" class="titulo"><img src="municipio.jpg" width="350px" height="50px"></td>
+       </tr>
+    </div>
+    <div>
+      <tr>
+      <td class="subtitulo">C.I.</td>
+      <td class="subtitulo1">NOMBRES</td>
+      <td class="subtitulo2">APELLIDOS</td>
+      </tr>
+    </div>
+      
+    <div>
+      <tbody>
+      @foreach($usuario as $u)
+      <tr class="datos">
+       <td>{{ $u->cedula }}</td>
+       <td>{{ $u->nombres }}</td>
+       <td>{{ $u->apellidos }}</td> 
+      </tr>   
+       @endforeach
+     </tbody>
+    </div>
+  
+   
 </table>
+</div>
 
+</body>
 </html>
 
 
+
+
+
+  

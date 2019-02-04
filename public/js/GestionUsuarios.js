@@ -240,38 +240,35 @@ $( "#B_Usuario" ).change(function() {
 
 /////////////////////////////////////////HISTORIAL
 
-// function mostrarUsuarioHistorial(id){
-//     $.get('listarUsuarioH/'+id, function (data) {   //Ruta de listar
-//         $("#tablaUsuarioHistorial").html("");
-//         $.each(data, function(i, item) { //recorre el data 
-//             cargarUsuarioHistorial(item); // carga los datos en la tabla
-//         });      
-//     });
-// }
-
-
 
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
+function mostrarHistorial(id){
+        $('#aactualizarUsuarioH').modal('show');
+        $('#idusuario').val(id);
+    }
+
+
+
 function actualizarUsuarioH(id){ 
     //alert(id);
     $.get('actualizarUsuarioH/'+id,function(data){
 
-        $('#idUsuario1').val(data.id);
-        $('#ceduUsu').val(data.cedula);
-        $('#nomUsu').val(data.nombres);
-        $('#apeUsu').val(data.apellidos);
-        $('#fnacU').val(data.fechaNacimiento);
-        $('#sexUsu').val(data.sexo);
-        $('#emailUsu').val(data.email);
-        $('#passwordup').val(data.password);
-        $('#NacUsu').val(data.nacionalidad);
-        $('#estadoCUsu').val(data.estadoCivil);
-        $('#DirecUsu').val(data.direccion);
-        $('#TelfUsu').val(data.telefono);
-        $('#nivelEUsu').val(data.nivelEstudio);
-        $('#PPUsu').val(data.perfilProfesional);
-        $('#tiposangreUsu').val(data.tipoSangre);
-        //$('#tipoUsu').val(data.tipousuario.id);
+        $('#idUsuario_H').val(data.id);
+        $('#ceduUsuAc').val(data.cedula);
+        $('#nomUsuAc').val(data.nombres);
+        $('#apeUsuAc').val(data.apellidos);
+        $('#fnacUsuAc').val(data.fechaNacimiento);
+        $('#sexUsuAc').val(data.sexo);
+        $('#emailUsuAc').val(data.email);
+        $('#passwordupN').val(data.password);
+        $('#NacUsuAc').val(data.nacionalidad);
+        $('#estadoCUsuAc').val(data.estadoCivil);
+        $('#DirecUsuAc').val(data.direccion);
+        $('#TelfUsuAc').val(data.telefono);
+        $('#nivelEUsuAc').val(data.nivelEstudio);
+        $('#PPUsuAc').val(data.perfilProfesional);
+        $('#tiposangreUsuAc').val(data.tipoSangre);
+        $('#tipoUsuAc').val(data.tipousuario.id);
     });
 }
 
@@ -280,23 +277,23 @@ function actualizarUsuarioH(id){
 /*PARA ACTUALIZAR LOS DATOS DEL USUARIO*/
 function updateUsuarioHistorial(){ 
    var FrmData = {
-        idUsuario: $('#idUsuario1').val(),
-        cedula: $('#ceduUsu').val(),
-        nombres: $('#nomUsu').val(),
-        apellidos: $('#apeUsu').val(),
-        fechaNacimiento: $('#fnacU').val(),
-        sexo: $('#sexUsu').val(),
-        email: $('#emailUsu').val(),
-        password: $('#passwordup').val(),
-        nacionalidad: $('#NacUsu').val(),
-        estadoCivil: $('#estadoCUsu').val(),
-        direccion: $('#DirecUsu').val(),
-        telefono: $('#TelfUsu').val(),
-        nivelEstudio: $('#nivelEUsu').val(),
-        perfilProfesional: $('#PPUsu').val(),
-        tipoSangre: $('#tiposangreUsu').val(),
-        //tipoUsuario_id: $('#tipoUsu').val(),
-        actualizarclave: $('#actualizarclave').val(),
+        idUsuario: $('#idUsuario_H').val(),
+        cedula: $('#ceduUsuAc').val(),
+        nombres: $('#nomUsuAc').val(),
+        apellidos: $('#apeUsuAc').val(),
+        fechaNacimiento: $('#fnacUsuAc').val(),
+        sexo: $('#sexUsuAc').val(),
+        email: $('#emailUsuAc').val(),
+        password: $('#passwordupN').val(),
+        nacionalidad: $('#NacUsuAc').val(),
+        estadoCivil: $('#estadoCUsuAc').val(),
+        direccion: $('#DirecUsuAc').val(),
+        telefono: $('#TelfUsuAc').val(),
+        nivelEstudio: $('#nivelEUsuAc').val(),
+        perfilProfesional: $('#PPUsuAc').val(),
+        tipoSangre: $('#tiposangreUsuAc').val(),
+        tipoUsuario_id: $('#tiposangreUsuAc').val(),
+        actualizarclave: $('#actualizarclaveN').val(),
     }
     $.ajaxSetup({
         headers: {
@@ -304,39 +301,19 @@ function updateUsuarioHistorial(){
         }
     });
     $.ajax({
-        url: 'historial/'+ $('#idUsuario').val(), // Url que se envia para la solicitud esta en el web php es la ruta
+        url: 'listarUsuarioH/'+ $('#idUsuario_H').val(), // Url que se envia para la solicitud esta en el web php es la ruta
         method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
             console.log(data);
-            mostrarUsuarioHistorial($('#idusuarioH').val());
+            mostrarHistorial($('#idUsuario_H').val());
         },
         
     });  
 }
 
 
-// function cargarUsuarioHistorial(data){
- 
-//     $("#tablaUsuarioHistorial").append(
-//         "<tr id='fila_cod"+"'>\
-//          <td>"+ data.cedula +"</td>\
-//          <td>"+ data.nombres +"</td>\
-//          <td>"+ data.apellidos +"</td>\
-//          <td>"+ data.fechaNacimiento +"</td>\
-//          <td>"+ data.sexo +"</td>\
-//          <td>"+ data.email +"</td>\
-//          <td>"+ data.nacionalidad +"</td>\
-//          <td>"+ data.estadoCivil +"</td>\
-//          <td>"+ data.direccion +"</td>\
-//          <td>"+ data.telefono +"</td>\
-//          <td>"+ data.nivelEstudio +"</td>\
-//          <td>"+ data.perfilProfesional +"</td>\
-//          <td>"+ data.tipoSangre +"</td>\
-//          <td>"+ data.tipousuario.tipo+"</td>"
-//     );
-// }
 
 function verUsuario(){ 
    //alert ($('#idusuarioH').val());
@@ -385,25 +362,29 @@ function verUsuario(){
 }
 
 
-// $("#actualizarclaveN").on('change', function(e){
-//     if (this.checked) {
-//         $("#passwordupdivN").prop('hidden',false);
-//         $("#passwordupN").prop('disabled',false);
-//         $("#passwordupN").prop('required',true);
-//         $("#actualizarclaveN").val('1');
+$("#actualizarclaveN").on('change', function(e){
+    if (this.checked) {
+        $("#passwordupdivN").prop('hidden',false);
+        $("#passwordupN").prop('disabled',false);
+        $("#passwordupN").prop('required',true);
+        $("#actualizarclaveN").val('1');
 
-//     } else {
-//         $("#passwordupdivN").prop('hidden',true);
-//         $("#passwordupN").prop('disabled',true);
-//         $("#passwordupN").prop('required',false);
-//         $("#actualizarclaveN").val('0');
+    } else {
+        $("#passwordupdivN").prop('hidden',true);
+        $("#passwordupN").prop('disabled',true);
+        $("#passwordupN").prop('required',false);
+        $("#actualizarclaveN").val('0');
     
-//     }
-// });
+    }
+});
 
 
 
-///////MOSTRAR CAPACITACIONES
+
+
+
+
+/////////////////////////////////////////MOSTRAR CAPACITACIONES
 function mostrarCapacitacionH(id){
     $.get('listarCapacitacion/'+id, function (data) {   //Ruta de listar
         $("#tablaCapacitacionH").html("");
@@ -425,3 +406,5 @@ function cargarCapacitacionH(data){
          <td>"+ data.tipocapacitacion.descripcion +"</td>"   
     );
 }
+
+

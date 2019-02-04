@@ -31,6 +31,24 @@ class Vacaciones extends Controller
         return view('GestionVacacion\Vacacion')->with(['vacacion'=> $vacacion, 'persona'=>$persona, 'usuario'=>$usuario]);
     }
 
+
+    public function indexVacacionIndividual()
+    {
+        $vacacion = Vacacion::with('persona', 'usuario')->get();
+        $persona = Persona::with('vacacion')->get();  
+        $usuario = User::with('vacacion')->get(); 
+        return view('GestionVacacion\MisVacaciones')->with(['vacacion'=> $vacacion, 'persona'=>$persona, 'usuario'=>$usuario ]);
+    }
+
+
+     public function indexVacacionGeneral()
+    {
+        $vacacion = Vacacion::with('persona', 'usuario')->get();
+        $persona = Persona::with('vacacion')->get();  
+        $usuario = User::with('vacacion')->get(); 
+        return view('GestionVacacion\VacacionesGenerales')->with(['vacacion'=> $vacacion, 'persona'=>$persona, 'usuario'=>$usuario ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
