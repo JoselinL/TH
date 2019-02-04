@@ -2,11 +2,11 @@
 
 @section('main-content')
 
-  <div class="container-fluid spark-screen">
+  <div class="row">
     <div class="row">
-        <div class="">
-          <div id="app">
-              <div class="">
+        <div >
+          <div>
+              <div >
                 <!--   <div class="register-logo">
                       <a href="{{ url('/home') }}"><b>Help</b>Desk</a>
                   </div> -->
@@ -85,6 +85,7 @@
      </div>
   </div>
   @include('GestionPermiso.ModalPermiso')
+  
 @endsection
                                  
             <script>

@@ -82,7 +82,7 @@ class Permisos extends Controller
         $permiso->fechaAprobTTHH = null;
         $permiso->horaInicio = date("H:i:s", strtotime(request('horaInicio')));
         $permiso->horaFin = date("H:i:s", strtotime(request('horaFin')));
-        $permiso->estado = null;
+        $permiso->estado = 0;
         $permiso->justificacion = $request->justificacion;
         $permiso->jefeAprueba = null;
         $permiso->tthhAprueba = null;
@@ -213,42 +213,42 @@ class Permisos extends Controller
 
     public function modificarPermiso(Request $request){
 
-        
-
         $consulta = Permiso::findOrFail($request->idPermiso);
         $user = User::with('tipousuario')->findOrFail($request->idusuario);
 
-        if ($consulta->estado<=2) {
+        if  ($consulta->estado == 0 || $consulta->estado == 1) {
             # code...
-            // if ($user->tipousuario->tipo=="Administrador") {
-            // # code...
-            //     $consulta->fechaAprobJefe=Carbon::now()->toDateTimeString();
-            //     $consulta->jefeAprueba=$user->nombres;
-            //     $consulta->estado=$consulta->estado+1; 
-            //     $consulta->save();
-            // }
-
-            if ($consulta->fechaAprobJefe==null && $user->tipousuario->tipo=="Jefe") {
-                # code...
+            if ($consulta->fechaAprobJefe==null && $user->tipousuario->tipo=="Jefe"){
                 $consulta->fechaAprobJefe=Carbon::now()->toDateTimeString();
                 $consulta->jefeAprueba=$user->nombres;
                 $consulta->estado=$consulta->estado+1; 
-                $consulta->save();
-            }else{
-                return response()->json('Y');
-            }
-
-            if ($consulta->fechaAprobTTHH==null && $user->tipousuario->tipo=="DirectorTH") {
+                $consulta->save();                
+            }else if ($consulta->fechaAprobTTHH==null && $user->tipousuario->tipo=="DirectorTH") {
                 $consulta->fechaAprobTTHH=Carbon::now()->toDateTimeString();
                 $consulta->tthhAprueba=$user->nombres;
-
                 $consulta->estado=$consulta->estado+1; 
-                $consulta->save();
-            }else{
-                return response()->json('Y');
+                $consulta->save();        
             }
-           
+
         }
+        return response()->json($consulta);
+    }
+
+    public function addObservacion(Request $request)
+    {
+        $consulta = Permiso::findOrFail($request->idPermiso);
+        $user = User::with('tipousuario')->findOrFail($request->idusuario);
+
+        $consulta->observacion= $user->apellidos." ".$user->nombres." : ".$request->observacion;
+        $consulta->save();
+
+        return response()->json($consulta);
 
     }
+    public function getObservacion($id)
+    {
+        $consulta = Permiso::findOrFail($id);
+        return response()->json($consulta->observacion);
+    }
 }
+
