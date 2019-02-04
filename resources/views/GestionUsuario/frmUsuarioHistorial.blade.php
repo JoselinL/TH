@@ -176,8 +176,8 @@
             </div>
             <div class="col-md-4">
             </div>  
-        </div> -->
-
+        </div> 
+-->
 
 
 
@@ -186,8 +186,11 @@
 </div>
 
       <div class="modal-footer">
-        <button type="button" onclick="actualizarUsuarioH();" data-dismiss="modal" class="btn btn-primary">Actualizar Datos</button>
+         <button type="button" onclick="mostrarHistorial();" data-dismiss="modal" class="btn btn-primary">Actualizar Datos</button>
       </div>
+<br>
+<br>
+<h3 align="center">CAPACITACIONES REALIZADAS</h3>
 <br>
  @include('GestionUsuario.MostrarHistorialCapacitacion')     
   </div>

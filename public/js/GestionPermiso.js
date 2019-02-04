@@ -33,9 +33,9 @@ function ingresarPermiso(){
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
           
-          
-            mostrarPermiso();      
+            mostrarPermiso($('#idusuario').val());      
             limpiarPermiso();
+             mostrarPermiso();
         },
         complete: function () {     
            
