@@ -1,16 +1,39 @@
-// $(document).ready(function()
-// {
-//           mostrarCapacitacion($('#idusuarioC').val());
-//  });
-window.onload=function(){
-   mostrarCapacitacion($('#idusuarioH').val());
-}
+$(document).ready(function()
+{
+          mostrarCapacitacion($('#idusuarioC').val());
+ });
+
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
 $('#form_cap').on('submit',function(e){
+ 
+    e.preventDefault();
 
-e.preventDefault();
-alert("hola");
+    var FrmData = new FormData(this);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: 'capacitacion', // Url que se envia para la solicitud esta en el web php es la ruta
+        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+           
+            
+          
+            mostrarCapacitacion();      
+            limpiarCapacitacion();
+        },
+        complete: function () {     
+           
+        }
+    });  
 });
+
+
 // function ingresarCapacitacion(){ 
 //     //Datos que se envian a la ruta
 //     var FrmData = {
@@ -22,28 +45,7 @@ alert("hola");
 //         user_id: $('#idusuarioC').val(),
 //     }
     
-//     $.ajaxSetup({
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         }
-//     });
-//     $.ajax({
-//         url: 'capacitacion', // Url que se envia para la solicitud esta en el web php es la ruta
-//         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
-//         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-//         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-//         {
-           
-            
-          
-//             mostrarCapacitacion();      
-//             limpiarCapacitacion();
-//         },
-//         complete: function () {     
-           
-//         }
-//     });  
-//}
+//     
 
 
 /*MOSTRAR TODOS LOS EMPLEADOS*/

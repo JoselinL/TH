@@ -7,7 +7,7 @@ use App\Capacitacion;
 use App\TipoCapacitacion;
 use App\User;
 use Illuminate\Support\Facades\DB;
-use Input;
+use Carbon\Carbon;
 
 class Capacitaciones extends Controller
 {
@@ -50,6 +50,12 @@ class Capacitaciones extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('documento');
+        $extension = $file->getClientOriginalExtension();
+        $fileName = Carbon::now()->toDateTimeString().'.'. $extension ;
+        $destino = public_path() . '/documentos';
+        $file->move($destino,$fileName);
+
         $capacitacion = new Capacitacion();
         $capacitacion->descripcion = $request->descripcion;
         $capacitacion->fechaInicio = date("Y-m-d", strtotime(request('fechaInicio')));
@@ -57,11 +63,14 @@ class Capacitaciones extends Controller
         $capacitacion->tipoCapacitacion_id = $request->tipoCapacitacion_id;
         $capacitacion->user_id = $request->user_id;
 
-        $file = Input::file('documento');
-        $aleatorio = str_random(10);
-        $nombre = $aleatorio.'_'.($file->getClientOriginalName());
-        $file->move('documents', $nombre);
+        // $file = Input::file('documento');
+        // $aleatorio = str_random(10);
+        // $nombre = $aleatorio.'_'.($file->getClientOriginalName());
+        // $file->move('documents', $nombre);
 
+        $consulta->ruta='documentos/'.$fileName;
+        $consulta->estado_del='1';
+        
         $capacitacion->save();
         $capacitacionvar = Capacitacion::with(['tipocapacitacion', 'usuario'])->find($capacitacion->id);
     

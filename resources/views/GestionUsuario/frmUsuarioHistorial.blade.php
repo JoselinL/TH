@@ -188,4 +188,6 @@
       <div class="modal-footer">
         <button type="button" onclick="actualizarUsuarioH();" data-dismiss="modal" class="btn btn-primary">Actualizar Datos</button>
       </div>
+<br>
+ @include('GestionUsuario.MostrarHistorialCapacitacion')     
   </div>

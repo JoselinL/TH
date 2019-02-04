@@ -1,6 +1,7 @@
 $(document).ready(function()
 {
          mostrarUsuario();
+         mostrarCapacitacionH($('#idusuarioH').val());
 //           //mostrarUsuarioHistorial($('#idusuarioH').val());
 });
 
@@ -399,3 +400,28 @@ function verUsuario(){
     
 //     }
 // });
+
+
+
+///////MOSTRAR CAPACITACIONES
+function mostrarCapacitacionH(id){
+    $.get('listarCapacitacion/'+id, function (data) {   //Ruta de listar
+        $("#tablaCapacitacionH").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarCapacitacionH(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
+function cargarCapacitacionH(data){
+ 
+    $("#tablaCapacitacionH").append(
+        "<tr id='fila_cod"+"'>\
+         <td>"+ data.descripcion +"</td>\
+         <td>"+ data.documento +"</td>\
+         <td>"+ data.fechaInicio +"</td>\
+         <td>"+ data.fechaFin +"</td>\
+         <td>"+ data.tipocapacitacion.descripcion +"</td>"   
+    );
+}
