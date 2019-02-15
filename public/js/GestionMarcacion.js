@@ -1,12 +1,13 @@
 $(document).ready(function()
 {
-          mostrarMarcacion();
+          mostrarMarcacion($('#idusuarioM').val());
  });
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
-function ingresarMarcacion(){ 
+function ingresarMarcacion(documentom){ 
     //Datos que se envian a la ruta
     var FrmData = {
-        persona_id: $('#personaIdMar').val(),
+        registro: documentom,
+        user_id: $('#idusuarioM').val(),
     }
     
     $.ajaxSetup({
@@ -32,8 +33,8 @@ function ingresarMarcacion(){
 
 
 /*MOSTRAR TODOS LOS EMPLEADOS*/
-function mostrarMarcacion(){
-    $.get('listarMarcacion', function (data) {   //Ruta de listar
+function mostrarMarcacion(id){
+    $.get('listarMarcacion/'+id, function (data) {   //Ruta de listar
         $("#tablaMarcacion").html("");
         $.each(data, function(i, item) { //recorre el data 
             cargarMarcacion(item); // carga los datos en la tabla
@@ -54,7 +55,7 @@ function eliminarMarcacion(id){
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {   
-          mostrarMarcacion(); // carga los datos en la tabla                       
+           mostrarMarcacion($('#idusuarioM').val()); // carga los datos en la tabla                       
         }
     });
 }
@@ -65,7 +66,8 @@ function actualizarMarcacion(id){
     $.get('actualizarMarcacion/'+id,function(data){
         
         $('#idMarcacion1').val(data.id);
-        $('#persona_idMarcacion').val(data.persona.id);
+        $('#regisID').val(data.registro);
+        $('#idusuarioM').val(data.usuario.id);
     });
 }
 
@@ -74,7 +76,8 @@ function actualizarMarcacion(id){
 function updateMarcacion(){ 
    var FrmData = {
         idMarcacion: $('#idMarcacion1').val(),
-        persona_id: $('#persona_idMarcacion').val(),
+        registro: $('#regisID').val(),
+        user_id: $('#idusuarioM').val(),
 
     }
     $.ajaxSetup({
@@ -89,7 +92,7 @@ function updateMarcacion(){
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
             console.log(data);
-            mostrarMarcacion(); 
+            mostrarMarcacion($('#idusuarioM').val());
             limpiarMarcacion();
         },
         
@@ -106,7 +109,8 @@ function cargarMarcacion(data){
  
     $("#tablaMarcacion").append(
         "<tr id='fila_cod"+"'>\
-         <td>"+ data.persona.cedula+"</td>\
+         <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
+         <td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.registro+"'><i class='fa fa-download'></i></a></button></td>\
          <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarMarcacion' onClick='actualizarMarcacion("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarMarcacion("+data.id+")'><i class='fa fa-trash'></i></button></td>"
     );
@@ -114,7 +118,32 @@ function cargarMarcacion(data){
 
 
 
+//Subida de archivos
+$("#form_Marcacion").submit(function(e){ // este metodo es para el submit de un formulario donde tengas                                     // el input de tipo file # form_enviarFile es el nombre de eese formulario
+    e.preventDefault();   // evitamos que se recargue la pagina al ejecutar el formulario
+    
+    $.ajaxSetup({
+        headers: { 
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
+    $.ajax({
+        type: "POST", // la ruta tiene que ser port // define una ruta post
+        url: 'guardarMarcacion',  // en este caso la ruta es esta
+        // data: e.serialize(),
+        data: new FormData(this), // como dato enviamos el contenido del formulario creando un objeto del mismo
+        contentType: false,  // no se pa q es esto xd
+        cache: false, // tampoco se
+        processData: false, // ni idea
+        
+        success: function (data) { // eso si quiers omitelo
+           ingresarMarcacion(data);
+        },
+            
+
+    }); 
+});
 
 
 

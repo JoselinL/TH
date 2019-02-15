@@ -4,17 +4,24 @@ $(document).ready(function()
  });
 
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
-$('#form_cap').on('submit',function(e){
- 
-    e.preventDefault();
-
-    var FrmData = new FormData(this);
-
+function ingresarCapacitacion(documentof){ 
+    //Datos que se envian a la ruta
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    var FrmData = {
+        descripcion: $('#descripcionCap').val(),
+        documento: documentof,
+        fechaInicio: $('#fechaIniCap').val(),
+        fechaFin: $('#fechaFiniCap').val(),
+        tipoCapacitacion_id: $('#tipcapId').val(),
+        user_id: $('#idusuarioC').val(),
+        
+    }
+
     $.ajax({
         url: 'capacitacion', // Url que se envia para la solicitud esta en el web php es la ruta
         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
@@ -31,7 +38,7 @@ $('#form_cap').on('submit',function(e){
            
         }
     });  
-});
+} ;
 
 
 // function ingresarCapacitacion(){ 
@@ -59,6 +66,7 @@ function mostrarCapacitacion(id){
 }
 
 
+
 function eliminarCapacitacion(id){
     $.ajaxSetup({
         headers: {
@@ -84,11 +92,11 @@ function actualizarCapacitacion(id){
         
         $('#idCapacitacion1').val(data.id);
         $('#descCapacitacion').val(data.descripcion);
-        $('#docCapacitacion').val(data.documento);
         $('#fecIniCapacitacion').val(data.fechaInicio);
         $('#fechFinCapacitacion').val(data.fechaFin);
         $('#tipoCapa_id').val(data.tipocapacitacion.id);
         $('#idusuarioH').val(data.usuario.id);
+        $('#docCapacitacion').val(data.documento);
     });
 }
 
@@ -98,11 +106,11 @@ function updateCapacitacion(){
    var FrmData = {
         idCapacitacion: $('#idCapacitacion1').val(),
         descripcion: $('#descCapacitacion').val(),
-        documento: $('#docCapacitacion').val(),
         fechaInicio: $('#fecIniCapacitacion').val(),
         fechaFin: $('#fechFinCapacitacion').val(),
         tipoCapacitacion_id: $('#tipoCapa_id').val(),
         user_id: $('#idusuarioH').val(),
+        documento: $('#docCapacitacion').val(),
 
     }
     $.ajaxSetup({
@@ -139,7 +147,6 @@ function cargarCapacitacion(data){
         "<tr id='fila_cod"+"'>\
          <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
          <td>"+ data.descripcion +"</td>\
-         <td>"+ data.documento +"</td>\
          <td>"+ data.fechaInicio +"</td>\
          <td>"+ data.fechaFin +"</td>\
          <td>"+ data.tipocapacitacion.descripcion +"</td>\
@@ -159,7 +166,6 @@ $( "#B_Capacitacion" ).change(function() {
                       "<tr id='"+item.id+"'>"+
                       "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
                        "<td>"+ item.descripcion+"</td>"+
-                       "<td>"+ item.documento+"</td>"+
                        "<td>"+ item.fechaInicio+"</td>"+
                        "<td>"+ item.fechaFin+"</td>"+
                        "<td>"+ item.tipocapacitacion.descripcion+"</td>"+
@@ -171,6 +177,33 @@ $( "#B_Capacitacion" ).change(function() {
     });
 });
 
+
+//Subida de archivos
+$("#form_Documento").submit(function(e){ // este metodo es para el submit de un formulario donde tengas                                     // el input de tipo file # form_enviarFile es el nombre de eese formulario
+    e.preventDefault();   // evitamos que se recargue la pagina al ejecutar el formulario
+    
+    $.ajaxSetup({
+        headers: { 
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: "POST", // la ruta tiene que ser port // define una ruta post
+        url: 'guardarDocumento',  // en este caso la ruta es esta
+        // data: e.serialize(),
+        data: new FormData(this), // como dato enviamos el contenido del formulario creando un objeto del mismo
+        contentType: false,  // no se pa q es esto xd
+        cache: false, // tampoco se
+        processData: false, // ni idea
+        
+        success: function (data) { // eso si quiers omitelo
+           ingresarCapacitacion(data);
+        },
+            
+
+    }); 
+});
 
 
 

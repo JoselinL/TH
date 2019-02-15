@@ -21,7 +21,6 @@
                <th scope="col">Fecha Fin</th>
                <th scope="col">Hora Inicio</th> 
                <th scope="col">Hora Fin</th> 
-               <th scope="col">Justificación</th>
                <th scope="col">Modificar</th>
                <th scope="col">Eliminar</th>
 

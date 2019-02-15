@@ -72,12 +72,12 @@ class VacacionPeriodos extends Controller
 
 
 
-    public function listarVP($id)
-    {
+    // public function listarVP($id)
+    // {
         
-        $vacacionperiodovar = VacacionPeriodo::with(['vacacion','periodo'])->where('vacacion_id',$id)->get();
-        return response()->json($vacacionperiodovar);
-    }
+    //     $vacacionperiodovar = VacacionPeriodo::with(['vacacion','periodo'])->where('vacacion_id',$id)->orderBy('id','desc')->limit(3)->get();
+    //     return response()->json($vacacionperiodovar);
+    // }
 
 
 

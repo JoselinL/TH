@@ -9,11 +9,11 @@ class Marcacion extends Model
     public $timestamps = false; 
 	protected $table = 'marcacion';
 	protected $fillable = [
-       'persona_id',
+       'user_id', 'registro',
     ];
 
 
-    public function persona(){
-        return $this->hasOne('App\Persona','id','persona_id');
+    public function usuario(){
+        return $this->hasOne('App\User','id','user_id');
     }
 }

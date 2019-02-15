@@ -2,7 +2,7 @@ $(document).ready(function()
 {
          mostrarUsuario();
          mostrarCapacitacionH($('#idusuarioH').val());
-//           //mostrarUsuarioHistorial($('#idusuarioH').val());
+         
 });
 
 window.onload=function(){
@@ -28,6 +28,8 @@ function ingresarUsuario(){
         perfilProfesional: $('#perfilPU').val(),
         tipoSangre: $('#tiposU').val(),
         tipoUsuario_id: $('#tipousU').val(),
+        area: $('#area_usuario').val(),
+        sueldo: $('#sueldoU').val(),
     }
     
     $.ajaxSetup({
@@ -103,6 +105,8 @@ function actualizarUsuario(id){
         $('#PPUsu').val(data.perfilProfesional);
         $('#tiposangreUsu').val(data.tipoSangre);
         $('#tipoUsu').val(data.tipousuario.id);
+        $('#areaUsu').val(data.area);  
+        $('#sueldoUsu').val(data.sueldo);  
     });
 }
 
@@ -127,6 +131,8 @@ function updateUsuario(){
         perfilProfesional: $('#PPUsu').val(),
         tipoSangre: $('#tiposangreUsu').val(),
         tipoUsuario_id: $('#tipoUsu').val(),
+        area: $('#areaUsu').val(),
+        sueldo: $('#sueldoUsu').val(),
         actualizarclave: $('#actualizarclave').val(),
     }
     $.ajaxSetup({
@@ -160,6 +166,7 @@ function limpiarUsuario(){
     $('#direccionU').val('');
     $('#telefonoU').val('');
     $('#perfilPU').val('');
+    $('#sueldoU').val('');
 }
 
 /*FUNCIÓN PARA CARGAR LOS USUARIOS EN LA TABLA*/
@@ -181,6 +188,8 @@ function cargarUsuario(data){
          <td>"+ data.perfilProfesional +"</td>\
          <td>"+ data.tipoSangre +"</td>\
          <td>"+ data.tipousuario.tipo+"</td>\
+         <td>"+ data.area+"</td>\
+         <td>"+ data.sueldo+"</td>\
          <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarUsuario' onClick='actualizarUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td></tr>"
     );
@@ -229,6 +238,8 @@ $( "#B_Usuario" ).change(function() {
                        "<td>"+ item.perfilProfesional+"</td>"+
                        "<td>"+ item.tipoSangre+"</td>"+
                        "<td>"+ item.tipousuario.tipo+"</td>"+
+                       "<td>"+ item.area+"</td>"+
+                       "<td>"+ item.sueldo+"</td>"+
                        "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarUsuario' onClick='actualizarUsuario("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
                        "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarUsuario("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
                 );
@@ -243,8 +254,8 @@ $( "#B_Usuario" ).change(function() {
 
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
 function mostrarHistorial(id){
-        $('#aactualizarUsuarioH').modal('show');
-        $('#idusuario').val(id);
+        $('#actualizarUsuarioH').modal('show');
+        $('#idUsuario_H').val(id);
     }
 
 
@@ -269,8 +280,11 @@ function actualizarUsuarioH(id){
         $('#PPUsuAc').val(data.perfilProfesional);
         $('#tiposangreUsuAc').val(data.tipoSangre);
         $('#tipoUsuAc').val(data.tipousuario.id);
+        $('#areaU').val(data.area);
+        $('#sueldoAc').val(data.sueldo);
     });
 }
+
 
 
 
@@ -293,6 +307,8 @@ function updateUsuarioHistorial(){
         perfilProfesional: $('#PPUsuAc').val(),
         tipoSangre: $('#tiposangreUsuAc').val(),
         tipoUsuario_id: $('#tiposangreUsuAc').val(),
+        area: $('#areaU').val(),
+        sueldo: $('#sueldoAc').val(),
         actualizarclave: $('#actualizarclaveN').val(),
     }
     $.ajaxSetup({
@@ -357,6 +373,8 @@ function verUsuario(){
         $('#PPUsuarioN').val(data.perfilProfesional);
         $('#tiposangreUsuarioN').val(data.tipoSangre);
         $('#tipoUsuarioN').val(data.tipousuario.id);
+        $('#areaN').val(data.area);
+        $('#sueldoN').val(data.sueldo);
     });
     
 }
@@ -400,10 +418,10 @@ function cargarCapacitacionH(data){
     $("#tablaCapacitacionH").append(
         "<tr id='fila_cod"+"'>\
          <td>"+ data.descripcion +"</td>\
-         <td>"+ data.documento +"</td>\
          <td>"+ data.fechaInicio +"</td>\
          <td>"+ data.fechaFin +"</td>\
-         <td>"+ data.tipocapacitacion.descripcion +"</td>"   
+         <td>"+ data.tipocapacitacion.descripcion +"</td>\
+         <td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.documento+"'><i class='fa fa-download'></i></a></button></td>"
     );
 }
 

@@ -10,27 +10,25 @@
 </div>
 @endif 
 
-<form role="form" method="POST" enctype="multipart/form-data">
+<form role="form" id="form_Marcacion" method="POST" enctype="multipart/form-data">
 
     {{ csrf_field() }} <!-- Para validar el token -->
 
      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group has-feedback">
-          <label for="persona_id"><b>Persona:</b></label>
-          <select class="form-control" name="persona_id" id="personaIdMar">
-              @foreach($persona as $p)
-                 
-                  <option value="{{ $p->id }}">{{ $p->cedula }}</option>
-            
-              @endforeach
-          </select>
-          </div>
-          @if($errors->has('persona_id'))
-          <span style='color:red;'> {{ $errors->first('persona_id') }} </span>
-          @endif 
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback">
+            <label for="registro"><b>Registro:</b></label>
+            <input type="file" class="form-control" name="input_file" id="registroID" value="{{ old('registro') }}"/>
+            </div>
+            @if($errors->has('registro'))
+            <span style='color:red;'> {{ $errors->first('registro') }} </span>
+            @endif
+
         </div>
       </div>
 
-    <button type="button" class="btn btn-primary" onclick="ingresarMarcacion()">Guardar</button>
+      <input type="hidden" name="" id="idusuarioM">
+
+   <button type="submit" class="btn btn-primary" onclick="">Guardar</button>
 </form>

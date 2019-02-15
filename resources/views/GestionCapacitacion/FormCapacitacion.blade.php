@@ -10,7 +10,7 @@
 </div>
 @endif 
 
-<form role="form_cap" method="POST" enctype="multipart/form-data">
+<form role="form" id="form_Documento" method="POST" enctype="multipart/form-data">
 
     {{ csrf_field() }} <!-- Para validar el token -->
 
@@ -32,8 +32,8 @@
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="documento"><b>Documento:</b></label>
-                <input type="file" class="form-control" name="documento" id="documentoCap" value="{{ old('documento') }}"/>
-                <span class="glyphicon glyphicon-duplicate form-control-feedback"></span>
+                <input type="file" class="form-control" name="input_file" id="documentoCap" value="{{ old('documento') }}"/>
+
                 </div>
                 @if($errors->has('documento'))
                 <span style='color:red;'> {{ $errors->first('documento') }} </span>
@@ -88,5 +88,5 @@
 
             <input type="hidden" name="" id="idusuarioC">
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary" onclick="">Guardar</button>
 </form>

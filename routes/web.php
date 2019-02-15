@@ -38,9 +38,11 @@ Route::get('/capacitacion', 'Capacitaciones@index');
 Route::get('/buscarCapacitacion/{descripcion?}','Capacitaciones@buscarCapacitacion');
 Route::get('/actualizarCapacitacion/{id}','Capacitaciones@actualizarCapacitacion');
 Route::get('/listarCapacitacion/{idusuarioC}','Capacitaciones@listarCapacitacion');
+Route::post('/guardarDocumento','Capacitaciones@guardarArchivo');
 //--------------------------------------------------------------------
 
 
+  
 //----------------------------------------------------TIPO CAPACITACION
 Route::resource('/tipocapacitacion', 'TipoCapacitaciones');
 Route::get('/tipocapacitacion', 'TipoCapacitaciones@index');
@@ -76,6 +78,9 @@ Route::get('/certificado/{idpdf}','Permisos@cargarPDF');
 Route::post('/addObservacion/{data}','Permisos@addObservacion');
 Route::get('/getObservacion/{data}','Permisos@getObservacion');
 
+Route::get('/permisoarea/{id}','Permisos@permisoArea');
+Route::post('/guardarJustificacion','Permisos@guardarJustificacion');
+
 //-----------------------------------------------------------------------
 
 
@@ -83,7 +88,8 @@ Route::get('/getObservacion/{data}','Permisos@getObservacion');
 Route::resource('/marcacion', 'Marcaciones');
 Route::get('/marcacion', 'Marcaciones@index');
 Route::get('/actualizarMarcacion/{id}','Marcaciones@actualizarMarcacion');
-Route::get('/listarMarcacion','Marcaciones@listarMarcacion');
+Route::get('/listarMarcacion/{idusuarioM}','Marcaciones@listarMarcacion');
+Route::post('/guardarMarcacion','Marcaciones@guardarMarcacion');
 //-----------------------------------------------------------------------
 
 
@@ -97,6 +103,13 @@ Route::get('/actualizarVacacion/{id}','Vacaciones@actualizarVacacion');
 Route::get('/listarVacacion/{idusuario1}','Vacaciones@listarVacacion');
 Route::get('/listarVacacionIndividual/{idusuario1}','Vacaciones@listarVacacionIndividual');
 Route::get('/listarVacacionGeneral','Vacaciones@listarVacacionGeneral');
+
+Route::post('/modificarVacacion/{frmData}', 'Vacaciones@modificarVacacion');  
+
+Route::post('/addObservacionvacacion/{data}','Vacaciones@addObservacionVacacion');
+Route::get('/getObservacionvacacion/{data}','Vacaciones@getObservacionVacacion');
+
+Route::get('/certificado_vacaciones/{idcertificado}','Vacaciones@cargarCertificado');
 //-----------------------------------------------------------------------------------------
 
 
@@ -105,6 +118,8 @@ Route::resource('/periodopersona', 'PeriodoPersonas');
 Route::get('/periodopersona', 'PeriodoPersonas@index');
 Route::get('/actualizarPP/{id}','PeriodoPersonas@actualizarPP');
 Route::get('/listarPP','PeriodoPersonas@listarPP');
+
+Route::get('/listarVP/{id}','PeriodoPersonas@listarVP');
 //---------------------------------------------------------------------
 
 
@@ -112,7 +127,7 @@ Route::get('/listarPP','PeriodoPersonas@listarPP');
 Route::resource('/vacacionperiodo', 'VacacionPeriodos');
 Route::get('/vacacionperiodo', 'VacacionPeriodos@index');
 Route::get('/actualizarVP/{id}','VacacionPeriodos@actualizarVP');
-Route::get('/listarVP/{id}','VacacionPeriodos@listarVP');
+
 //---------------------------------------------------------------------
 
 
@@ -128,14 +143,16 @@ Route::get('/listarTU','TipoUsuarios@listarTU');
 Route::resource('/usuario', 'Usuarios');
 Route::get('/usuario', 'Usuarios@index');
 Route::get('/buscarUsuario/{nombres?}','Usuarios@buscarUsuario');
-Route::get('/listarUsuarios', 'Usuarios@indexListado');
 Route::get('/actualizarUsuario/{id}','Usuarios@actualizarUsuario');
 Route::get('/listarUsuario','Usuarios@listarUsuario');
 
 //Route::get('/actualizarhistorial/{id}','Usuarios@actualizarUsuarioH');
 Route::get('/historial', 'Usuarios@indexHistorial');
+Route::get('/listarUsuarios', 'Usuarios@indexListado');
+Route::get('/nomina', 'Usuarios@indexNomina');
 Route::get('/listarUsuarioH/{idusuarioH}','Usuarios@listarUsuarioH');
 Route::get('/actualizarUsuarioH/{id}','Usuarios@actualizarUsuarioH');
+
 //-------------------------------------------------------------------
 
 

@@ -9,11 +9,11 @@ class PeriodoPersona extends Model
     public $timestamps = false; 
 	protected $table = 'periodoPersona';
 	protected $fillable = [
-       'cantidadDiasPeriodo', 'persona_id', 'periodo_id',
+       'cantidadDiasPeriodo', 'user_id', 'periodo_id',
     ];
 
-    public function persona(){
-        return $this->hasOne('App\Persona','id','persona_id');
+    public function usuario(){
+        return $this->hasOne('App\User','id','user_id');
     }
 
 	public function periodo(){

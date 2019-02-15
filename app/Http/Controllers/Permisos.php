@@ -65,6 +65,20 @@ class Permisos extends Controller
         //
     }
 
+
+
+    public function guardarJustificacion(Request $request)
+    {
+        $var_documento = $request->file('input_file');
+        $destino = public_path().'/justificaciones';
+        $nombreDoc = date('Ymd').time().'_'.$var_documento->getClientOriginalName();
+        $var_documento->move($destino, $nombreDoc);
+
+        $documento12 = 'justificaciones/'.$nombreDoc;
+
+        return $documento12;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -97,7 +111,7 @@ class Permisos extends Controller
         $permiso->save();
         $permisovar = Permiso::with(['persona','usuario'])->find($permiso->id);
     
-        return response()->json($permisovar);
+        return json_encode(array('succes'=> true, 'id'=> $permisovar->id));
     }
 
     /**
@@ -106,6 +120,18 @@ class Permisos extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+
+    // public function permisoArea($id)
+    // {
+    //     $userJefe = User::find('id');
+    //     //$permisoJefe = User::with('permiso')->get();
+    //     $permisoJefe = User::with(['permiso'])->where('area','like','%$userJefe->area%')->get();
+    //     return response()->json($permisoJefe);                           
+                                                   
+    // }
+
 
 
     public function actualizarPermiso($id)
@@ -124,7 +150,7 @@ class Permisos extends Controller
 
     public function listarPermisoGeneral()
     {
-        $permisovar = Permiso::with(['persona', 'usuario'])->get();
+        $permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
         return response()->json($permisovar);
     }
 
@@ -151,7 +177,9 @@ class Permisos extends Controller
        $permisovar = Permiso::with(['persona','usuario'])->where('user_id',$idpdf)
         ->get(); 
 
-        $pdf = PDF::loadView('GestionPermiso\MostrarPDF', ['permiso'=>$permisovar]);
+        
+        $persona=User::findOrFail($idpdf);
+        $pdf = PDF::loadView('GestionPermiso\MostrarPDF', ['permiso'=>$permisovar, 'persona'=>$persona]);
         return $pdf->download('certificado.pdf');
 
     }

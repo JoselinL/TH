@@ -165,6 +165,33 @@
                   </select>
         </div>
         </div>
+
+
+        <div class="col-md-4">
+             <div class="form-group has-feedback">
+                <label> <b>Área:</b></label>
+                <select class="form-control" id="areaUsu" name="area">
+                         <option disabled selected>Área</option>
+                         <option>Archivo</option>
+                         <option>Auditoría Interna</option>
+                         <option>Contabilidad</option>
+                         <option>Financiera</option>
+                         <option>Tecnologías de la información</option>
+                         <option>Talento Humano</option>
+                         <option>Tesorería</option>
+                         <option>Rentas Internas</option>
+                </select>
+              </div>
+        </div>
+
+
+         <div class="col-md-4">
+             <div class="form-group has-feedback">
+                <label> <b>Sueldo:</b></label>
+                <input type="text" class="form-control" id="sueldoUsu" name="sueldo"required />
+              </div>
+        </div>
+
   </form>
 </div>
 

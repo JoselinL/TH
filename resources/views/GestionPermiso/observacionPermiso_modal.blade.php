@@ -3,7 +3,7 @@
     <div class="modal-content" id="bodymodalmarca">
       <form  method="POST" role="form" action="" enctype="multipart/form-data" id="formHorario">
         <div class="modal-header">
-          <h4 class="modal-title" id="exampleModalLongTitle" style="text-align: center"><b>CANTIDAD DE DÍAS DISPONIBLES</b></h4>
+          <h4 class="modal-title" id="exampleModalLongTitle" style="text-align: center"><b>OBSERVACIÓN</b></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>  </button>
         </div>

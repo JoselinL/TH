@@ -10,13 +10,13 @@
 </div>
 @endif 
 
-<form role="form" method="POST" enctype="multipart/form-data">
+<form role="form" method="POST" id="form_Permiso" enctype="multipart/form-data">  
 
     {{ csrf_field() }} <!-- Para validar el token -->
 
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="descripcion"><b>Descripción:</b></label>
                 <input type="text" class="form-control" placeholder="Ingrese la descripción" name="descripcion" id="descripcionPer" value="{{ old('descripcion') }}"/>
@@ -27,11 +27,9 @@
                 @endif
 
             </div>
-        </div>
 
 
-        <div class="row">
-            <div class="col-md-6">
+             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="fechaInicio"><b>Fecha de inicio:</b></label>
                 <input type="date" class="form-control" name="fechaInicio" id="fechaIniPer" value="{{ old('fechaInicio') }}"/>
@@ -42,8 +40,11 @@
                 @endif
 
             </div>
+        </div>
 
 
+        <div class="row">
+           
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="fechaFin"><b>Fecha de finalización:</b></label>
@@ -55,11 +56,8 @@
                 @endif
 
             </div>
-        </div>
 
-
-        <div class="row">
-            <div class="col-md-6">
+             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="horaInicio"><b>Hora de inicio:</b></label>
                 <input type="time" class="form-control" name="horaInicio" id="horaInicioPer" value="{{ old('horaInicio') }}"/>
@@ -70,7 +68,10 @@
                 @endif
 
             </div>
+        </div>
 
+
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="horaFin"><b>Hora de finalización:</b></label>
@@ -82,26 +83,26 @@
                 @endif
 
             </div>
-        </div>
 
-
-        <div class="row">
-        <div class="col-md-12">
-            <div class="form-group has-feedback">
-            <label for="justificacion"><b>Justificación:</b></label>
-            <textarea class="form-control" name="justificacion" id="justificacionPer" placeholder="Ingrese la justificación" value="{{ old('justificacion') }}"></textarea>
-            <span class="glyphicon glyphicon-file form-control-feedback"></span>
-            </div>
-            @if($errors->has('justificacion'))
-            <span style='color:red;'> {{ $errors->first('justificacion') }} </span>
-            @endif
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                <label for="justificacion"><b>Justificación:</b></label>
+                 <input type="file" class="form-control" name="input_file" id="justificacionPer" value="{{ old('justificacion') }}"/>
+                </div>
+                @if($errors->has('justificacion'))
+                <span style='color:red;'> {{ $errors->first('justificacion') }} </span>
+                @endif
 
             </div>
         </div>
+
+
+
+       
 
 
          <input type="hidden" name="" id="idusuario">
 
     
-    <button type="button" class="btn btn-primary" onclick="ingresarPermiso()">Guardar</button>
+    <button type="submit" class="btn btn-primary" onclick="">Guardar</button>
 </form>

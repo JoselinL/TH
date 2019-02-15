@@ -2,11 +2,11 @@
 
 @section('main-content')
 
-  <div class="row">
+  <div class="container-fluid spark-screen">
     <div class="row">
-        <div >
-          <div>
-              <div >
+        <div class="">
+          <div id="app">
+              <div class="">
                 <!--   <div class="register-logo">
                       <a href="{{ url('/home') }}"><b>Help</b>Desk</a>
                   </div> -->

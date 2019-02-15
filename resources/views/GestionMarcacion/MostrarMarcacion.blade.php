@@ -2,7 +2,8 @@
     <table class="table table-hover text-center">
       
            <thead>
-               <th scope="col">Persona</th>
+               <th scope="col">Usuario</th>
+               <th scope="col">Registro</th>
                <th scope="col">Modificar</th>
                <th scope="col">Eliminar</th>
            </thead>

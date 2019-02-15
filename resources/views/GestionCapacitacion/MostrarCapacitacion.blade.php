@@ -16,8 +16,7 @@
       
            <thead>
                <th scope="col">Usuario</th>  
-               <th scope="col">Descripción</th>
-               <th scope="col">Documento</th>       
+               <th scope="col">Descripción</th>    
                <th scope="col">Fecha de inicio</th>   
                <th scope="col">Fecha de fin</th>
                <th scope="col">Tipo</th>

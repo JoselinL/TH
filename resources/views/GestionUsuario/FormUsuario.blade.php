@@ -233,7 +233,45 @@
                 @endif
 
             </div>
+
+
+               <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label for="area"><b>Área:</b></label>
+                    <select class="form-control" id="area_usuario" name="area" >
+                         <option disabled selected>Área</option>
+                         <option>Archivo</option>
+                         <option>Auditoría Interna</option>
+                         <option>Contabilidad</option>
+                         <option>Financiera</option>
+                         <option>Tecnologías de la información</option>
+                         <option>Talento Humano</option>
+                         <option>Tesorería</option>
+                         <option>Rentas Internas</option>
+                    </select>
+                
+                @if($errors->has('area'))
+                 <span style='color:red;'> {{ $errors->first('area') }} </span>
+                @endif
+
+                </div>
+            </div>
         </div>
+
+       
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                <label for="sueldo"><b>Sueldo:</b></label>
+                <input type="text" class="form-control" placeholder="Ingrese el sueldo" name="sueldo" id="sueldoU" value="{{ old('sueldo') }}"/>
+                <span class="glyphicon glyphicon-usd form-control-feedback"></span>
+                </div>
+                @if($errors->has('sueldo'))
+                <span style='color:red;'> {{ $errors->first('sueldo') }} </span>
+                @endif
+            </div>
+        </div>
+
 
 
     <button type="button" class="btn btn-primary" onclick="ingresarUsuario()">Guardar</button>

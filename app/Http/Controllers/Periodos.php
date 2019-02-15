@@ -64,7 +64,7 @@ class Periodos extends Controller
                 }
                
             }
-            return response()->json($periodo);
+        return response()->json($periodo);
 
         }
         

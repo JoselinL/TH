@@ -4,9 +4,9 @@
 
   <div class="container-fluid spark-screen">
     <div class="row">
-        <div >
-          <div>
-            <div>
+        <div class="">
+          <div id="app">
+              <div class="">
                 <!--   <div class="register-logo">
                       <a href="{{ url('/home') }}"><b>Help</b>Desk</a>
                   </div> -->
@@ -31,9 +31,9 @@
                   @endif
 
                 <div class="register-box-body"  >
-
+            <div class="container">
                     <div class="row">
-                            <div class="row">
+                            
                                     <div class="col-md-11">
                                         <div class="panel panel-default">
                                             <legend class="text-center header">

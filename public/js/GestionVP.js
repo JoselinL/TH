@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-          mostrarVP();
+          mostrarVP($('#vacacionVP').val());
  });
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
 function ingresarVP(){ 
@@ -23,7 +23,7 @@ function ingresarVP(){
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
            
-            mostrarVP();      
+            mostrarVP($('#vacacionVP').val());      
             limpiarVP();
         },
         complete: function () {     
@@ -34,13 +34,14 @@ function ingresarVP(){
 
 
 /*MOSTRAR TODOS LOS EMPLEADOS*/
-function mostrarVP(){
-    //$.get('listarVP/', function (data) {   //Ruta de listar
-        //$("#tablaVP").html("");
-        //$.each(data, function(i, item) { //recorre el data 
-            //cargarVP(item); // carga los datos en la tabla
-        //});      
-   // });
+function mostrarVP(id){
+    console.log(id)
+    $.get('listarVP/'+id, function (data) {   //Ruta de listar
+        $("#tablaVP").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarVP(item); // carga los datos en la tabla
+        });      
+   });
 }
 
 function eliminarVP(id){

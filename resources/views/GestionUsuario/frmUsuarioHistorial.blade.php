@@ -162,6 +162,33 @@
         </div>
         </div>
 
+
+
+        <div class="row">
+        <div class="col-md-6">
+             <div class="form-group has-feedback">
+                <label> <b>Área:</b></label>
+                <select class="form-control" id="areaN" name="area" disabled="">
+                         <option disabled selected>Área</option>
+                         <option>Archivo</option>
+                         <option>Auditoría Interna</option>
+                         <option>Contabilidad</option>
+                         <option>Financiera</option>
+                         <option>Tecnologías de la información</option>
+                         <option>Talento Humano</option>
+                         <option>Tesorería</option>
+                         <option>Rentas Internas</option>
+                </select>
+              </div>
+        </div>
+
+        <div class="col-md-6">
+             <div class="form-group has-feedback">
+                <label> <b>Sueldo:</b></label>
+                <input type="text" class="form-control" id="sueldoN" name="sueldo"required  disabled="" />
+              </div>
+        </div>
+        </div>
         <!-- <div class="row">
             <div class="col-md-4">
               <label class="lcontainer" style="color: blue; font-size: 14px">Actualizar Contraseña?

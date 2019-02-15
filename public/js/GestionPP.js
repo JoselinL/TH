@@ -8,7 +8,7 @@ function ingresarPP(){
     var FrmData = {
         cantidadDiasPeriodo: $('#cantDiasPeriPP').val(),
         periodo_id: $('#periodoIDPP').val(),
-        persona_id: $('#personaIdPP').val(),
+        user_id: $('#personaIdPP').val(),
     }
     
     $.ajaxSetup({
@@ -69,7 +69,7 @@ function actualizarPP(id){
         $('#idPP1').val(data.id);
         $('#CDP_PP').val(data.cantidadDiasPeriodo);
         $('#Id_PeriodoPP').val(data.periodo.id);
-        $('#Id_PersonaPP').val(data.persona.id);
+        $('#Id_PersonaPP').val(data.usuario.id);
     });
 }
 
@@ -80,7 +80,7 @@ function updatePP(){
         idPP: $('#idPP1').val(),
         cantidadDiasPeriodo: $('#CDP_PP').val(),
         periodo_id: $('#Id_PeriodoPP').val(),
-        persona_id: $('#Id_PersonaPP').val(),
+        user_id: $('#Id_PersonaPP').val(),
 
     }
     $.ajaxSetup({
@@ -114,7 +114,7 @@ function cargarPP(data){
         "<tr id='fila_cod"+"'>\
          <td>"+ data.cantidadDiasPeriodo+"</td>\
          <td>"+ data.periodo.descripcion+"</td>\
-         <td>"+ data.persona.cedula+"</td>\
+         <td>"+ data.usuario.nombres+"</td>\
          <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPP' onClick='actualizarPP("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPP("+data.id+")'><i class='fa fa-trash'></i></button></td>"
     );

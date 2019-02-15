@@ -46,6 +46,13 @@ class Usuarios extends Controller
     }
 
 
+    public function indexNomina()
+    {
+        $usuario = User::with('tipousuario')->get();
+        $tipousuario = TipoUsuario::with('usuario')->get();    
+        return view('GestionUsuario\Nomina')->with(['usuario'=> $usuario, 'tipousuario'=>$tipousuario]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -81,6 +88,8 @@ class Usuarios extends Controller
         $usuario->nivelEstudio = $request->nivelEstudio;
         $usuario->perfilProfesional = $request->perfilProfesional;
         $usuario->cedula = $request->cedula;
+        $usuario->area = $request->area;
+        $usuario->sueldo = $request->sueldo;
         $usuario->save();
         $usuariovar = User::with(['tipousuario'])->find($usuario->id);
         return response()->json($usuariovar);
@@ -173,6 +182,8 @@ class Usuarios extends Controller
         $usuario->nivelEstudio = $request->nivelEstudio;
         $usuario->perfilProfesional = $request->perfilProfesional;
         $usuario->cedula = $request->cedula;
+        $usuario->area = $request->area;
+        $usuario->sueldo = $request->sueldo;
 
         if ($request->actualizarclave=="1") {
             $usuario->password=bcrypt($request->password);

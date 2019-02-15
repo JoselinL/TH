@@ -67,7 +67,7 @@
       <div>
      </div>
   </div>
-  
+@include('GestionVacacion.observacionVacacion_modal') 
 @endsection
                                  
             <script>

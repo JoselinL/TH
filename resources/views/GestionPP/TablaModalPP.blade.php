@@ -28,13 +28,13 @@
 
 
         <div class="col-md-4">
-              <div class="form-group has-feedback" id="persona_id">
-                <label for="persona_id">Persona:</label>
+              <div class="form-group has-feedback" id="user_id">
+                <label for="user_id">Persona:</label>
 
-                  <select class="form-control" name="persona_id" id="Id_PersonaPP">
-                    @if(isset($persona))
-                    @foreach($persona as $s)
-                  <option value="{{ $s->id}}">{{ $s->cedula }}</option>               
+                  <select class="form-control" name="user_id" id="Id_PersonaPP">
+                    @if(isset($usuario))
+                    @foreach($usuario as $s)
+                  <option value="{{ $s->id}}">{{ $s->nombres }}</option>               
                     @endforeach
                     @endif
                   </select>

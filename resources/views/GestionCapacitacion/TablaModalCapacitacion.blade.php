@@ -12,12 +12,6 @@
               </div>
         </div>
         
-        <div class="col-md-4">
-             <div class="form-group has-feedback">
-                <label > <b >Documento:</b></label>
-                <input type="file" class="form-control" id="docCapacitacion" name="documento"required />
-              </div>
-        </div>
         
 
         <div class="col-md-4">
@@ -52,6 +46,12 @@
         </div>
         </div>
 
+          <div class="col-md-4">
+             <div class="form-group has-feedback">
+                <label > <b >Documento:</b></label>
+                <input type="file" class="form-control" id="docCapacitacion" name="documento"required />
+              </div>
+        </div>
 
         <input type="hidden" name="" id="idusuarioC">
         

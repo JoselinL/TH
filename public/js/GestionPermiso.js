@@ -5,7 +5,7 @@ $(document).ready(function()
           mostrarPermisoGeneral();
  });
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
-function ingresarPermiso(){ 
+function ingresarPermiso(documentop){ 
     //Datos que se envian a la ruta
     var FrmData = {
         descripcion: $('#descripcionPer').val(),
@@ -16,7 +16,7 @@ function ingresarPermiso(){
         horaInicio: $('#horaInicioPer').val(),
         horaFin: $('#horaFinPer').val(),
         estado: $('#estadoPer').val(),
-        justificacion: $('#justificacionPer').val(),
+        justificacion: documentop,
         persona_id: $('#personaIdPer').val(),
         user_id: $('#idusuario').val(),
     }
@@ -152,7 +152,6 @@ function cargarPermiso(data){
          <td>"+ data.fechaFin +"</td>\
          <td>"+ data.horaInicio +"</td>\
          <td>"+ data.horaFin +"</td>\
-         <td>"+ data.justificacion +"</td>\
          <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermiso("+data.id+")'><i class='fa fa-trash'></i></button></td>"
     );
@@ -177,7 +176,6 @@ $( "#B_Permiso" ).change(function() {
                        "<td>"+ item.fechaFin+"</td>"+
                        "<td>"+ item.horaInicio+"</td>"+
                        "<td>"+ item.horaFin+"</td>"+
-                       "<td>"+ item.justificacion+"</td>"+
                        "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
                        "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermiso("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
                 );
@@ -236,13 +234,12 @@ function cargarPermisoUsuario(data){
     fila+='<td>'+ data.fechaFin +'</td>';
     fila+='<td>'+ data.horaInicio +'</td>';
     fila+='<td>'+ data.horaFin +'</td>';
-    fila+='<td>'+ data.justificacion +'</td>';
     fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermisoUsuario' onClick='actualizarPermisoUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
     fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermisoUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td>";
     
-    
+    var url="../../TalentoHumano/public/certificado/"+data.usuario.id;
     if (data.estado==2) {
-            fila+="<td class='row'><button type='button' class='btn btn-success' data-toggle='modal' data-target='#addObservacionPermiso'><a href='certificado' class='fa fa-file-pdf-o '></a></button></td>";
+            fila+="<td class='row'><a href='"+url+"' class='btn btn-success' id='btn-confirm'><i class='fa fa-file-text'></i></a</td>";
     
     }else{
         //fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
@@ -268,6 +265,16 @@ function cargarPermisoUsuario(data){
     //      <td class='row'><button type='button' class='btn btn-success' data-toggle='modal' data-target='#certificadoUsuario' onClick='certificadoUsuario("+data.id+")'><i class='fa fa-file-pdf-o '></i></button></td>"
     // );
 }
+
+
+function descargarPDF(id){ 
+    alert(id);
+    $.get('certificado/'+id,function(){
+        
+      
+    });
+}
+
 
 
 function actualizarPermisoUsuario(id){ 
@@ -361,7 +368,6 @@ $( "#B_PermisoIndividual" ).change(function() {
                        "<td>"+ item.fechaFin+"</td>"+
                        "<td>"+ item.horaInicio+"</td>"+
                        "<td>"+ item.horaFin+"</td>"+
-                       "<td>"+ item.justificacion+"</td>"+
                        "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
                        "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermiso("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
                 );
@@ -396,13 +402,13 @@ function mostrarPermisoGeneral(){
 function cargarPermisoGeneral(data){
     var fila ="";
     fila+="<tr>";
-    fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
+    // fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
     fila+="<td>"+ data.descripcion +"</td>";
     fila+="<td>"+ data.fechaInicio +"</td>";
-    fila+=" <td>"+ data.fechaFin +"</td>";
+    fila+="<td>"+ data.fechaFin +"</td>";
     fila+="<td>"+ data.horaInicio +"</td>";
     fila+="<td>"+ data.horaFin +"</td>";
-    fila+="<td class='row'><button type='button' class='btn btn-info'><i class='fa fa-eye'></i></button></td>";
+    fila+="<td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.justificacion+"'><i class='fa fa-download'></i></a></button></td>";
     if (data.estado<2) {
         fila+="<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>";    
         fila+="<td class='row'><button type='button' class='btn btn-danger' onClicK='verModalReprobarPermiso("+data.id+")'><i class='fa fa-close'></i></button></td>";
@@ -547,3 +553,31 @@ function vermensajeObservacion(_id) {
 
      
 }
+
+
+//Subida de archivos
+$("#form_Permiso").submit(function(e){ // este metodo es para el submit de un formulario donde tengas                                     // el input de tipo file # form_enviarFile es el nombre de eese formulario
+    e.preventDefault();   // evitamos que se recargue la pagina al ejecutar el formulario
+    
+    $.ajaxSetup({
+        headers: { 
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: "POST", // la ruta tiene que ser port // define una ruta post
+        url: 'guardarJustificacion',  // en este caso la ruta es esta
+        // data: e.serialize(),
+        data: new FormData(this), // como dato enviamos el contenido del formulario creando un objeto del mismo
+        contentType: false,  // no se pa q es esto xd
+        cache: false, // tampoco se
+        processData: false, // ni idea
+        
+        success: function (data) { // eso si quiers omitelo
+           ingresarPermiso(data);
+        },
+            
+
+    }); 
+});

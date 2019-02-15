@@ -60,7 +60,7 @@
 
 
 
-    <button type="button" onclick="mostrarDisponibilidad();" data-dismiss="modal" class="btn btn-success">Disponibilidad</button>
+    <button type="button" onclick="mostrarDisponibilidad($('#idusuario1').val());" data-dismiss="modal" class="btn btn-success">Disponibilidad</button>
 
     <button type="button" class="btn btn-primary" onclick="ingresarVacacion()">Guardar</button>
 </form>

@@ -4,7 +4,7 @@
            <thead>
   	           <th scope="col">Cantidad de días</th>
   	           <th scope="col">Periodo</th>
-               <th scope="col">Persona</th>
+               <th scope="col">Usuario</th>
                <th scope="col">Modificar</th>
                <th scope="col">Eliminar</th>
            </thead>

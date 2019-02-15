@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PeriodoPersona;
 use App\Periodo;
-use App\Persona;
+use App\User;
 
 
 class PeriodoPersonas extends Controller
@@ -19,16 +19,16 @@ class PeriodoPersonas extends Controller
     public function cargarPP()
     {
          $periodopersona=PeriodoPersona::with('periodo')->get();
-         $periodopersona=PeriodoPersona::with('persona')->get();
+         $periodopersona=PeriodoPersona::with('usuario')->get();
          return response()->json($periodopersona);
     }
 
     public function index()
     {
-        $periodopersona = PeriodoPersona::with('periodo', 'persona')->get();
+        $periodopersona = PeriodoPersona::with('periodo', 'usuario')->get();
         $periodo = Periodo::with('periodopersona')->get();   
-        $persona = Persona::with('periodopersona')->get();  
-        return view('GestionPP\PP')->with(['periodopersona'=> $periodopersona, 'periodo'=>$periodo, 'persona'=>$persona ]);
+        $usuario = User::with('periodopersona')->get();  
+        return view('GestionPP\PP')->with(['periodopersona'=> $periodopersona, 'periodo'=>$periodo, 'usuario'=>$usuario ]);
     }
 
     /**
@@ -52,25 +52,33 @@ class PeriodoPersonas extends Controller
         $periodopersona = new PeriodoPersona();
         $periodopersona->cantidadDiasPeriodo = $request->cantidadDiasPeriodo;
         $periodopersona->periodo_id = $request->periodo_id;
-        $periodopersona->persona_id = $request->persona_id;
+        $periodopersona->user_id = $request->user_id;
         $periodopersona->save();
-        $periodopersonavar = PeriodoPersona::with(['periodo','persona'])->find($periodopersona->id);
+        $periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->find($periodopersona->id);
         return response()->json($periodopersonavar);
     }
 
 
     public function actualizarPP($id)
     {
-        $periodopersonavar = PeriodoPersona::with(['periodo','persona'])->find($id);
+        $periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->find($id);
         return response()->json($periodopersonavar);
     }
 
     public function listarPP()
     {
-        $periodopersonavar = PeriodoPersona::with(['periodo','persona'])->get();
+        $periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->get();
         return response()->json($periodopersonavar);
     }
 
+
+
+    public function listarVP($id)
+    {
+        
+        $periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->where('user_id',$id)->limit(3)->sum('cantidadDiasPeriodo');
+        return response()->json($periodopersonavar);
+    }
     /**
      * Display the specified resource.
      *
@@ -106,7 +114,7 @@ class PeriodoPersonas extends Controller
         $periodopersona = PeriodoPersona::find($request->idPP);
         $periodopersona->cantidadDiasPeriodo = $request->cantidadDiasPeriodo;
         $periodopersona->periodo_id = $request->periodo_id;
-        $periodopersona->persona_id = $request->persona_id;
+        $periodopersona->user_id = $request->user_id;
         $periodopersona->save();
         return response()->json($periodopersona); 
     }

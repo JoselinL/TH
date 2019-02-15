@@ -29,6 +29,8 @@
                <th scope="col">Perfil profesional</th> 
                <th scope="col">Tipo sangre</th>       
                <th scope="col">Tipo</th>   
+               <th scope="col">Área</th> 
+               <th scope="col">Sueldo</th> 
                <th scope="col">Modificar</th>
                <th scope="col">Eliminar</th>
            </thead>

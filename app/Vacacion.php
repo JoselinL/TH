@@ -9,7 +9,7 @@ class Vacacion extends Model
     public $timestamps = false; 
     protected $table = 'vacaciones';
     protected $fillable = [
-        'descripcion', 'fechaInicio', 'fechaFin', 'fechaAprobacionJefe', 'fechaAprobacionTTHH', 'estado', 'persona_id', 'jefeAprueba', 'tthhAprueba', 'user_id'
+        'descripcion', 'fechaInicio', 'fechaFin', 'fechaAprobacionJefe', 'fechaAprobacionTTHH', 'estado', 'persona_id', 'jefeAprueba', 'tthhAprueba', 'user_id',
     ];
 
     public function persona(){

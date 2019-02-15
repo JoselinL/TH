@@ -138,7 +138,7 @@
 
                     @if(Auth::user()->tipoUsuario_id=='1' || Auth::user()->tipoUsuario_id=='3' || Auth::user()->tipoUsuario_id=='4')
 
-                    <li><a href="{{ url('/vacacionesgenerales') }}"><i class='fa fa-pencil-square'></i>Vacacciones Generales</a></li>
+                    <li><a href="{{ url('/vacacionesgenerales') }}"><i class='fa fa-pencil-square'></i>Vacaciones Generales</a></li>
 
                      @endif
 
@@ -165,7 +165,8 @@
                 <a href="#"><i class='glyphicon glyphicon-list-alt'></i> <span>INFORME DE NOMINAS</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     
-                    <li><a href="{{ url('/') }}"><i class='fa fa-eye'></i>Ver Informe</a></li>
+                    <li><a href="{{ url('/nomina') }}"><i class='fa fa-eye'></i>Ver Informe</a></li>
+
 
                 </ul>
             </li>

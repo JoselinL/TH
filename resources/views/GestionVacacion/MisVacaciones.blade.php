@@ -67,6 +67,9 @@
       <div>
      </div>
   </div>
+  <div>
+  @include('GestionVacacion.mensajeObservacionVacacion_modal')
+  </div>
 @include('GestionVacacion.ModalVacacionIndividual') 
 @endsection
                                  

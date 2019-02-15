@@ -48,17 +48,17 @@
         <div class="row">
           <div class="col-md-6">
                 <div class="form-group has-feedback">
-                <label for="persona_id"><b>Persona:</b></label>
-                <select class="form-control" name="persona_id" id="personaIdPP">
-                    @foreach($persona as $p)
+                <label for="user_id"><b>Usuario:</b></label>
+                <select class="form-control" name="user_id" id="personaIdPP">
+                    @foreach($usuario as $p)
                
-                <option value="{{ $p->id }}">{{ $p->cedula }}</option>
+                <option value="{{ $p->id }}">{{ $p->nombres }}</option>
           
                     @endforeach
                  </select>
                 </div>
-                @if($errors->has('persona_id'))
-                <span style='color:red;'> {{ $errors->first('persona_id') }} </span>
+                @if($errors->has('user_id'))
+                <span style='color:red;'> {{ $errors->first('user_id') }} </span>
                 @endif
 
             </div>

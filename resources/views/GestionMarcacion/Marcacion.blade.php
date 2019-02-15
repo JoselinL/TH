@@ -11,6 +11,14 @@
                       <a href="{{ url('/home') }}"><b>Help</b>Desk</a>
                   </div> -->
 
+
+                  @guest
+                    <input type="hidden" name="" id="idusuarioM">
+                  @else
+                    <input type="hidden" name="" value="{{ Auth::user()->id }}" id="idusuarioM">
+                  @endguest
+
+
                   @if (count($errors) > 0)
                       <div class="alert alert-danger">
                           <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>

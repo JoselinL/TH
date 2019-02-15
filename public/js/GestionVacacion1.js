@@ -227,17 +227,19 @@ $( "#B_Vacacion" ).keyup(function() {
     function cargarDisponibilidad(id){
         
         $.get('listarVP/'+id, function (data) { 
-             $('#tablaD').html(''); // limpia el tbody de la tabla
-             $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+            console.log(id+""+data);
+            $('#cantidadDisponible').append(" "+data+" días");
+             //$('#tablaD').html(''); // limpia el tbody de la tabla
+            // $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
                 // agregaso uno a uno los valores del objero json como una fila
                 // append permite agregar codigo en una etiqueta sin remplazar el contenido anterior
-                $('#tablaD').append(
-                    '<tr>'+
-                        '<td>'+item.vacacion.usuario.nombres+' '+item.vacacion.usuario.apellidos+'</td>'+
-                        '<td >'+item.periodo.descripcion+'</td>'+
-                        '<td>'+item.cantidad+'</td>'
-                );
-         });
+                // $('#tablaD').append(
+                //     '<tr>'+
+                //         '<td>'+item.vacacion.usuario.nombres+' '+item.vacacion.usuario.apellidos+'</td>'+
+                //         '<td >'+item.periodo.descripcion+'</td>'+
+                //         '<td>'+item.cantidad+'</td>'
+                // );
+         //});
         }); 
     }
 
@@ -250,6 +252,30 @@ $( "#B_Vacacion" ).keyup(function() {
             cargarVacacionIndividual(item); // carga los datos en la tabla
         });      
     });
+}
+
+
+function MostrarCertificado(id){
+    $.get('certificado_vacaciones/'+id, function (data) {   //Ruta de listar
+        $("#tablaCertificado").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarCertificado(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
+function cargarCertificado(data){
+ 
+    $("#tablaCertificado").append(
+        "<tr id='fila_cod"+"'>\
+         <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
+         <td>"+ data.usuario.cedula +"</td>\
+         <td>"+ data.fechaInicio +"</td>\
+         <td>"+ data.fechaFin +"</td>\
+         <td>"+ data.jefeAprueba +"</td>\
+         <td>"+ data.tthhAprueba +"</td>"
+    );
 }
 
 
@@ -266,8 +292,10 @@ function cargarVacacionIndividual(data){
     fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacionIndividual' onClick='actualizarVacacionIndividual("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
     fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarVacacionIndividual("+data.id+")'><i class='fa fa-trash'></i></button></td>";
     
+    
+    var url="../../TalentoHumano/public/certificado_vacaciones/"+data.usuario.id;
     if (data.estado==2) {
-        fila+="<td class='row'><button type='button' class='btn btn-success'><a href='certificado' class='fa fa-file-pdf-o '></a></button></td>";
+        fila+="<td class='row'><a href='"+url+"' class='btn btn-success' id='btn-confirm'><i class='fa fa-file-text'></i></a</td>";
 
     }else{
         fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
@@ -292,6 +320,16 @@ function cargarVacacionIndividual(data){
     //      <td class='row'><button type='button' class='btn btn-success' data-toggle='modal' data-target='#certificadoUsuario' onClick='certificadoUsuario("+data.id+")'><i class='fa fa-file-pdf-o '></i></button></td>"
     // );
 }
+
+
+function descargarCertificado(id){ 
+    alert(id);
+    $.get('certificado_vacaciones/'+id,function(){
+        
+      
+    });
+}
+
 
 
 function actualizarVacacionIndividual(id){ 
@@ -392,6 +430,7 @@ function mostrarVacacionGeneral(){
     $.get('listarVacacionGeneral/', function (data) {   //Ruta de listar
         $("#tablaVacacionGeneral").html("");
         $.each(data, function(i, item) { //recorre el data 
+
             cargarVacacionGeneral(item); // carga los datos en la tabla
         });      
     });
@@ -400,19 +439,44 @@ function mostrarVacacionGeneral(){
 
 
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
-
-
 function cargarVacacionGeneral(data){
-    $("#tablaVacacionGeneral").append(
-        "<tr id='fila_cod"+"'>\
-         <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
-         <td>"+ data.descripcion +"</td>\
-         <td>"+ data.fechaInicio +"</td>\
-         <td>"+ data.fechaFin +"</td>\
-         <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
-         <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
-    );
+    var fila ="";
+    fila+="<tr>";
+    fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
+    fila+="<td>"+ data.descripcion +"</td>";
+    fila+="<td>"+ data.fechaInicio +"</td>";
+    fila+=" <td>"+ data.fechaFin +"</td>";
+    
+    if (data.estado<2) {
+        fila+="<td class='row'><button type='button' class='btn btn-success' onClick='AprobarVacacion("+data.id+")'><i class='fa fa-check'></i></button></td>";    
+        fila+="<td class='row'><button type='button' class='btn btn-danger' onClicK='verModalReprobarVacacion("+data.id+")'><i class='fa fa-close'></i></button></td>";
+    
+    }else{
+        fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-check'></i></button></td>";            
+        fila+="<td class='row'><button type='button' class='btn btn-danger' disabled><i class='fa fa-close'></i></button></td>";        
+    }
+    
+
+    $("#tablaVacacionGeneral").append(fila);
+    // $("#tablaPermisoGeneral").append(
+    //     "<tr id='fila_cod"+"'>\
+    //      <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
+    //      <td>"+ data.descripcion +"</td>\
+    //      <td>"+ data.fechaInicio +"</td>\
+    //      <td>"+ data.fechaFin +"</td>\
+    //      <td>"+ data.horaInicio +"</td>\
+    //      <td>"+ data.horaFin +"</td>\
+    //      <td class='row'><button type='button' class='btn btn-info' onClick=''><i class='fa fa-eye'></i></button></td>\
+    //      <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
+    //      <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
+    // );
 }
+
+
+
+
+
+
 
 
 $( "#B_VacacionGeneral" ).change(function() {
@@ -437,3 +501,100 @@ $( "#B_VacacionGeneral" ).change(function() {
          }); 
     });
 });
+
+
+
+function AprobarVacacion(_id){
+    //alert('yupi');
+  var FrmData ={
+    idVacacion: _id,
+    idusuario: $('#idusuario1').val(),
+  }
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: 'modificarVacacion/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+           
+            mostrarVacacionGeneral();
+            if (data.estado<2) {
+                alert("Haz aprobado este permiso");
+            }if(data.estado==2){
+                alert("El pemiso ya ha sido consedido");
+            }
+        },
+        complete: function () {     
+           
+        }
+    });  
+}
+
+
+
+function verModalReprobarVacacion(_id) {
+    //alert("jo");
+    $('#idVacacion_g').val(_id);
+    //alert($('#idPermiso_g').val());
+    $.get('getObservacionvacacion/'+_id,function (data) {
+        $('#txtObservacionVacacion').val(data);
+    });
+    //getObservacion
+
+    $('#addObservacionVacacion').modal('show');
+    
+    
+}
+
+
+$('#GuardarObservacionVacacion').on('click',function () {
+    var FrmData ={
+        idPermiso: $('#idVacacion_g').val(),
+        idusuario: $('#idusuario_').val(),
+        observacion: $('#txtObservacionVacacion').val(),
+    }
+    
+    //alert(FrmData.idPermiso);//+" ;idusuario: "+FrmData.idusuario+" ;observacion: "+FrmData.observacion);
+    
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: 'addObservacionvacacion/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+            //alert('ok');
+            $('#addObservacionVacacion').modal('hide');
+        },
+        complete: function () {     
+           
+        },
+        error:function () {
+            
+        }
+    });    
+});
+
+function vermensajeObservacionVacacion(_id) {
+    //$('#txtmensajeObservacion').val();
+    //alert(_id);
+    $.get('getObservacionvacacion/'+_id,function (data) {
+        $('#txtmensajeObservacionVacacion').html(data);
+        //alert(data);
+        //alert(_id);
+    });
+    // $('#mensajeObservacion').modal('show');    
+
+     
+}

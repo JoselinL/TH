@@ -30,17 +30,6 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="form-group has-feedback">
-            <label for="fechaFin"><b>Fecha de finalización:</b></label>
-            <input type="date" class="form-control" name="fechaFin" id="fechaFinPeri" value="{{ old('fechaFin') }}"/>
-            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-            </div>
-            @if($errors->has('fechaFin'))
-            <span style='color:red;'> {{ $errors->first('fechaFin') }} </span>
-            @endif
-
-        </div>
 
         <div class="col-md-6">
             <div class="form-group has-feedback">
@@ -50,6 +39,18 @@
             </div>
             @if($errors->has('fechaInicio'))
             <span style='color:red;'> {{ $errors->first('fechaInicio') }} </span>
+            @endif
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group has-feedback">
+            <label for="fechaFin"><b>Fecha de finalización:</b></label>
+            <input type="date" class="form-control" name="fechaFin" id="fechaFinPeri" value="{{ old('fechaFin') }}"/>
+            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+            </div>
+            @if($errors->has('fechaFin'))
+            <span style='color:red;'> {{ $errors->first('fechaFin') }} </span>
             @endif
 
         </div>

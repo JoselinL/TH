@@ -4,20 +4,16 @@
     <input type="text" name="id" id="idMarcacion1" hidden >
         <div class="row">
         
+        
         <div class="col-md-4">
-              <div class="form-group has-feedback" id="persona_id">
-                <label for="persona_id">Persona:</label>
-
-                  <select class="form-control" name="persona_id" id="persona_idMarcacion">
-                    @if(isset($persona))
-                    @foreach($persona as $s)
-                  <option value="{{ $s->id}}">{{ $s->cedula }}</option>               
-                    @endforeach
-                    @endif
-                  </select>
-        </div>
+             <div class="form-group has-feedback">
+                <label> <b>Registro:</b></label>
+                <input type="file" class="form-control" id="regisID" name="registro"required />
+              </div>
         </div>
 
+
+        <input type="hidden" name="" id="idusuarioM">
 
       <div class="modal-footer">
         <button type="button" onclick="updateMarcacion();" data-dismiss="modal" class="btn btn-primary">Actualizar</button>
