@@ -104,11 +104,12 @@ class Usuarios extends Controller
 
 
 
-    public function actualizarUsuarioH($id)
-    {
-        $usuariovar = User::with(['tipousuario'])->find($id);
-        return response()->json($usuariovar);
-    }
+
+    // public function actualizarUsuarioH($id)
+    // {
+    //     $usuariovar = User::with(['tipousuario'])->findOrFail($idusuario_H);       
+    //     return response()->json($usuariovar);
+    // }
 
 
 

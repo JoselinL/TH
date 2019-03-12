@@ -2,12 +2,16 @@ $(document).ready(function()
 {
          mostrarUsuario();
          mostrarCapacitacionH($('#idusuarioH').val());
-         
+         mostrarHistorial($('#idUsuarioH').val());
 });
 
 window.onload=function(){
     verUsuario()
 }
+
+
+
+
 
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
 function ingresarUsuario(){ 
@@ -86,7 +90,7 @@ function eliminarUsuario(id){
 
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
 function actualizarUsuario(id){ 
-    //alert(id);
+   // alert(id);
     $.get('actualizarUsuario/'+id,function(data){
 
         $('#idUsuario1').val(data.id);
@@ -252,63 +256,61 @@ $( "#B_Usuario" ).change(function() {
 /////////////////////////////////////////HISTORIAL
 
 
-/*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
-function mostrarHistorial(id){
-        $('#actualizarUsuarioH').modal('show');
-        $('#idUsuario_H').val(id);
-    }
-
-
-
-function actualizarUsuarioH(id){ 
-    //alert(id);
-    $.get('actualizarUsuarioH/'+id,function(data){
-
-        $('#idUsuario_H').val(data.id);
-        $('#ceduUsuAc').val(data.cedula);
-        $('#nomUsuAc').val(data.nombres);
-        $('#apeUsuAc').val(data.apellidos);
-        $('#fnacUsuAc').val(data.fechaNacimiento);
-        $('#sexUsuAc').val(data.sexo);
-        $('#emailUsuAc').val(data.email);
-        $('#passwordupN').val(data.password);
-        $('#NacUsuAc').val(data.nacionalidad);
-        $('#estadoCUsuAc').val(data.estadoCivil);
-        $('#DirecUsuAc').val(data.direccion);
-        $('#TelfUsuAc').val(data.telefono);
-        $('#nivelEUsuAc').val(data.nivelEstudio);
-        $('#PPUsuAc').val(data.perfilProfesional);
-        $('#tiposangreUsuAc').val(data.tipoSangre);
-        $('#tipoUsuAc').val(data.tipousuario.id);
-        $('#areaU').val(data.area);
-        $('#sueldoAc').val(data.sueldo);
+//MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL 
+    function mostrarHistorial(){
+    $.get('listarUsuario/', function (data) {   //Ruta de listar    
     });
 }
 
+// function actualizarUsuarioH(id){ 
+//     //alert($('#idusuario_H').val());
+//     $.get('actualizarUsuarioH/'+id,function(data){
+
+//             $('#idUsuario_H').val(data.id);
+            // $('#ceduUsuAc').val(data.cedula);
+            // $('#nomUsuAc').val(data.nombres);
+            // $('#apeUsuAc').val(data.apellidos);
+            // $('#fnacUsuAc').val(data.fechaNacimiento);
+            // $('#sexUsuAc').val(data.sexo);
+            // $('#emailUsuAc').val(data.email);
+            // $('#passwordupN').val(data.password);
+            // $('#NacUsuAc').val(data.nacionalidad);
+            // $('#estadoCUsuAc').val(data.estadoCivil);
+            // $('#DirecUsuAc').val(data.direccion);
+            // $('#TelfUsuAc').val(data.telefono);
+            // $('#nivelEUsuAc').val(data.nivelEstudio);
+            // $('#PPUsuAc').val(data.perfilProfesional);
+            // $('#tiposangreUsuAc').val(data.tipoSangre);
+            // $('#tipoUsuAc').val(data.tipousuario.id);
+            // $('#areaU').val(data.area);
+            // $('#sueldoAc').val(data.sueldo);
+/*    });
+}*/
 
 
 
-/*PARA ACTUALIZAR LOS DATOS DEL USUARIO*/
+// /*PARA ACTUALIZAR LOS DATOS DEL USUARIO*/
 function updateUsuarioHistorial(){ 
+
    var FrmData = {
-        idUsuario: $('#idUsuario_H').val(),
-        cedula: $('#ceduUsuAc').val(),
-        nombres: $('#nomUsuAc').val(),
-        apellidos: $('#apeUsuAc').val(),
-        fechaNacimiento: $('#fnacUsuAc').val(),
-        sexo: $('#sexUsuAc').val(),
-        email: $('#emailUsuAc').val(),
+        idUsuario: $('#idUsuarioN').val(),
+        cedula: $('#cedulaUsuarioN').val(),
+        nombres: $('#nomUsuarioN').val(),
+        apellidos: $('#apeUsuarioN').val(),
+        fechaNacimiento: $('#fnacUN').val(),
+        sexo: $('#sexUsuarioN').val(),
+        email: $('#emailUsuarioN').val(),
         password: $('#passwordupN').val(),
-        nacionalidad: $('#NacUsuAc').val(),
-        estadoCivil: $('#estadoCUsuAc').val(),
-        direccion: $('#DirecUsuAc').val(),
-        telefono: $('#TelfUsuAc').val(),
-        nivelEstudio: $('#nivelEUsuAc').val(),
-        perfilProfesional: $('#PPUsuAc').val(),
-        tipoSangre: $('#tiposangreUsuAc').val(),
-        tipoUsuario_id: $('#tiposangreUsuAc').val(),
-        area: $('#areaU').val(),
-        sueldo: $('#sueldoAc').val(),
+        nacionalidad: $('#NacUsuarioN').val(),
+        estadoCivil: $('#estadoCUsuarioN').val(),
+        direccion: $('#DirecUsuarioN').val(),
+        telefono: $('#TelfUsuarioN').val(),
+        nivelEstudio: $('#nivelEUsuarioN').val(),
+        perfilProfesional: $('#PPUsuarioN').val(),
+        tipoSangre: $('#tiposangreUsuarioN').val(),
+        tipoUsuario_id: $('#tipoUsuarioN').val(),
+        area: $('#areaN').val(),
+        sueldo: $('#sueldoN').val(),
         actualizarclave: $('#actualizarclaveN').val(),
     }
     $.ajaxSetup({
@@ -317,13 +319,13 @@ function updateUsuarioHistorial(){
         }
     });
     $.ajax({
-        url: 'listarUsuarioH/'+ $('#idUsuario_H').val(), // Url que se envia para la solicitud esta en el web php es la ruta
+        url: 'listarUsuario/'+ $('#idUsuarioH').val(), // Url que se envia para la solicitud esta en el web php es la ruta
         method: "PUT",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
             console.log(data);
-            mostrarHistorial($('#idUsuario_H').val());
+            mostrarHistorial($('#idUsuarioH').val());
         },
         
     });  

@@ -44,7 +44,7 @@
         <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>Sexo:</b></label>
-                <select class="form-control" id="sexUsuarioN" name="sexo" disabled="">
+                <select class="form-control" id="sexUsuarioN" name="sexo">
                         <option disabled selected>Sexo</option>
                         <option>Femenino</option>
                         <option>Masculino</option>
@@ -57,7 +57,7 @@
         <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>E-mail:</b></label>
-                <input type="text" class="form-control" id="emailUsuarioN" name="email"required disabled=""/>
+                <input type="text" class="form-control" id="emailUsuarioN" name="email"required/>
               </div>
         </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>Estado civil:</b></label>
-                <select class="form-control" id="estadoCUsuarioN" name="estadoCivil" disabled="">
+                <select class="form-control" id="estadoCUsuarioN" name="estadoCivil">
                         <option disabled selected>Estado civil</option>
                         <option>Soltero</option>
                         <option>Casado</option>
@@ -89,7 +89,7 @@
          <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>Dirección:</b></label>
-                <input type="text" class="form-control" id="DirecUsuarioN" name="direccion"required disabled=""/>
+                <input type="text" class="form-control" id="DirecUsuarioN" name="direccion"required/>
               </div>
         </div>
 
@@ -98,7 +98,7 @@
         <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>Teléfono:</b></label>
-                <input type="text" class="form-control" id="TelfUsuarioN" name="telefono"required disabled=""/>
+                <input type="text" class="form-control" id="TelfUsuarioN" name="telefono"required/>
               </div>
         </div>
         </div>
@@ -108,7 +108,7 @@
         <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>Nivel de estudios:</b></label>
-                <select class="form-control" id="nivelEUsuarioN" name="nivelEstudio" disabled="">
+                <select class="form-control" id="nivelEUsuarioN" name="nivelEstudio">
                         <option disabled selected>Nivel de estudios</option>
                         <option>Primaria</option>
                         <option>Bachillerato</option>
@@ -122,7 +122,7 @@
         <div class="col-md-6">
              <div class="form-group has-feedback">
                 <label> <b>Perfil profesional:</b></label>
-                <input type="text" class="form-control" id="PPUsuarioN" name="perfilProfesional"required  disabled="" />
+                <input type="text" class="form-control" id="PPUsuarioN" name="perfilProfesional"required/>
               </div>
         </div>
         </div>
@@ -189,7 +189,9 @@
               </div>
         </div>
         </div>
-        <!-- <div class="row">
+        
+
+        <div class="row">
             <div class="col-md-4">
               <label class="lcontainer" style="color: blue; font-size: 14px">Actualizar Contraseña?
               <input type="checkbox" name="actualizarclave" id="actualizarclaveN">
@@ -204,7 +206,6 @@
             <div class="col-md-4">
             </div>  
         </div> 
--->
 
 
 
@@ -212,8 +213,9 @@
 
 </div>
 
+
       <div class="modal-footer">
-         <button type="button" onclick="mostrarHistorial();" data-dismiss="modal" class="btn btn-primary">Actualizar Datos</button>
+         <button type="button" onclick="updateUsuarioHistorial();" data-dismiss="modal" class="btn btn-primary">Actualizar Datos</button>
       </div>
 <br>
 <br>

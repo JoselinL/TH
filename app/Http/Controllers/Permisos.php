@@ -177,7 +177,6 @@ class Permisos extends Controller
        $permisovar = Permiso::with(['persona','usuario'])->where('user_id',$idpdf)
         ->get(); 
 
-        
         $persona=User::findOrFail($idpdf);
         $pdf = PDF::loadView('GestionPermiso\MostrarPDF', ['permiso'=>$permisovar, 'persona'=>$persona]);
         return $pdf->download('certificado.pdf');

@@ -151,7 +151,7 @@ Route::get('/historial', 'Usuarios@indexHistorial');
 Route::get('/listarUsuarios', 'Usuarios@indexListado');
 Route::get('/nomina', 'Usuarios@indexNomina');
 Route::get('/listarUsuarioH/{idusuarioH}','Usuarios@listarUsuarioH');
-Route::get('/actualizarUsuarioH/{id}','Usuarios@actualizarUsuarioH');
+// Route::get('/actualizarUsuarioH/{id}','Usuarios@actualizarUsuarioH');
 
 //-------------------------------------------------------------------
 

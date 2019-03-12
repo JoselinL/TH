@@ -22,7 +22,6 @@
                <th scope="col">Hora Inicio</th> 
                <th scope="col">Hora Fin</th> 
                <th scope="col">Modificar</th>
-               <th scope="col">Eliminar</th>
                <th scope="col">Certificado</th>
 
            </thead>

@@ -110,9 +110,8 @@ function cargarMarcacion(data){
     $("#tablaMarcacion").append(
         "<tr id='fila_cod"+"'>\
          <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
-         <td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.registro+"'><i class='fa fa-download'></i></a></button></td>\
-         <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarMarcacion' onClick='actualizarMarcacion("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
-         <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarMarcacion("+data.id+")'><i class='fa fa-trash'></i></button></td>"
+         <td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.registro+"'><i class='fa fa-download'></i></a></button></td>"
+        
     );
 }
 

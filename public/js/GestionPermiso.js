@@ -235,7 +235,7 @@ function cargarPermisoUsuario(data){
     fila+='<td>'+ data.horaInicio +'</td>';
     fila+='<td>'+ data.horaFin +'</td>';
     fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermisoUsuario' onClick='actualizarPermisoUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
-    fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermisoUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td>";
+    //fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermisoUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td>";
     
     var url="../../TalentoHumano/public/certificado/"+data.usuario.id;
     if (data.estado==2) {
@@ -334,23 +334,23 @@ function updatePermisoUsuario(){
 }
 
 
-function eliminarPermisoUsuario(id){
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    var FrmData ;
-    $.ajax({
-        url: 'permiso/'+id, // Url que se envia para la solicitud esta en el web php es la ruta
-        method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
-        data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-        {   
-          mostrarPermisoUsuario($('#idusuario').val());                       
-        }
-    });
-}
+// function eliminarPermisoUsuario(id){
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//     var FrmData ;
+//     $.ajax({
+//         url: 'permiso/'+id, // Url que se envia para la solicitud esta en el web php es la ruta
+//         method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
+//         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+//         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+//         {   
+//           mostrarPermisoUsuario($('#idusuario').val());                       
+//         }
+//     });
+// }
 
 
 $( "#B_PermisoIndividual" ).change(function() {
@@ -368,8 +368,7 @@ $( "#B_PermisoIndividual" ).change(function() {
                        "<td>"+ item.fechaFin+"</td>"+
                        "<td>"+ item.horaInicio+"</td>"+
                        "<td>"+ item.horaFin+"</td>"+
-                       "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
-                       "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermiso("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
+                       "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"
                 );
                 
          }); 
@@ -402,7 +401,7 @@ function mostrarPermisoGeneral(){
 function cargarPermisoGeneral(data){
     var fila ="";
     fila+="<tr>";
-    // fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
+    fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
     fila+="<td>"+ data.descripcion +"</td>";
     fila+="<td>"+ data.fechaInicio +"</td>";
     fila+="<td>"+ data.fechaFin +"</td>";
