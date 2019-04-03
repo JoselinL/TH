@@ -35,7 +35,6 @@ function ingresarVP(){
 
 /*MOSTRAR TODOS LOS EMPLEADOS*/
 function mostrarVP(id){
-    console.log(id)
     $.get('listarVP/'+id, function (data) {   //Ruta de listar
         $("#tablaVP").html("");
         $.each(data, function(i, item) { //recorre el data 

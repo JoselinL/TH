@@ -192,20 +192,28 @@
         
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <label class="lcontainer" style="color: blue; font-size: 14px">Actualizar Contraseña?
               <input type="checkbox" name="actualizarclave" id="actualizarclaveN">
                 <span class="lcheckmark"></span>
               </label>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group has-feedback" id="passwordupdivN" hidden>
                   <input type="password" class="form-control" id="passwordupN" placeholder="Password" name="passwordup" disabled />
                 </div>
             </div>
-            <div class="col-md-4">
-            </div>  
+       
         </div> 
+
+        <div class="row">
+        <div class="col-md-6">
+             <div class="form-group has-feedback">
+                <label> <b>Fecha de contratación:</b></label>
+                <input type="date" class="form-control" id="fechaInicioN" name="fechaInicio"required  disabled="" />
+              </div>
+        </div>
+       </div> 
 
 
 

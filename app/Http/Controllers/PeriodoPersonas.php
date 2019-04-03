@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PeriodoPersona;
 use App\Periodo;
 use App\User;
+use Illuminate\support\Facades\DB;
 
 
 class PeriodoPersonas extends Controller
@@ -31,6 +32,32 @@ class PeriodoPersonas extends Controller
         return view('GestionPP\PP')->with(['periodopersona'=> $periodopersona, 'periodo'=>$periodo, 'usuario'=>$usuario ]);
     }
 
+
+    
+    // public function buscarPP($cantidadDiasPeriodo=''){ 
+    //     $periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->where('cantidadDiasPeriodo', 'like', "%$cantidadDiasPeriodo%")->get();
+    //     return response()->json($periodopersonavar);
+    //  }
+
+
+     public function buscarPP($cedula){ 
+        $consulta = DB::table('periodo')
+        ->join('periodopersona', 'periodopersona.periodo_id', '=', 'periodo.id')
+        ->join('user', 'user.id', '=', 'periodopersona.user_id')
+        ->select('user.cedula', 'user.nombres', 'user.apellidos', DB::raw('SUM(periodopersona.cantidadDiasPeriodo) As suma'))
+        //->where('user.cedula', '=', $cedula)
+        ->where([['user.cedula', '=', $cedula],['cedula', 'like', "%$cedula%"]])
+        ->groupBy('periodopersona.user_id')  
+        ->groupBy('user.cedula')
+        ->groupBy('user.nombres')
+        ->groupBy('user.apellidos')
+        ->get();
+
+        return response()->json($consulta);
+     }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,7 +77,7 @@ class PeriodoPersonas extends Controller
     public function store(Request $request)
     {
         $periodopersona = new PeriodoPersona();
-        $periodopersona->cantidadDiasPeriodo = $request->cantidadDiasPeriodo;
+        $periodopersona->cantidadDiasPeriodo = "30";
         $periodopersona->periodo_id = $request->periodo_id;
         $periodopersona->user_id = $request->user_id;
         $periodopersona->save();
@@ -67,7 +94,21 @@ class PeriodoPersonas extends Controller
 
     public function listarPP()
     {
-        $periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->get();
+        //$periodopersonavar = PeriodoPersona::with(['periodo','usuario'])->get();
+
+        $periodopersonavar = DB::table('periodopersona')
+                ->select('periodopersona.user_id','user.nombres','user.apellidos',
+                    'user.cedula', DB::raw('SUM(cantidadDiasPeriodo) As suma')
+                )
+                ->join('user', 'user.id', '=', 'periodopersona.user_id')
+               
+                ->groupBy('periodopersona.user_id')  
+                ->groupBy('user.cedula')
+                ->groupBy('user.nombres')
+                ->groupBy('user.apellidos')
+                ->get();
+
+
         return response()->json($periodopersonavar);
     }
 

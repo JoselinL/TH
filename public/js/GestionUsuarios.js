@@ -34,6 +34,7 @@ function ingresarUsuario(){
         tipoUsuario_id: $('#tipousU').val(),
         area: $('#area_usuario').val(),
         sueldo: $('#sueldoU').val(),
+        fechaInicio: $('#fechaInicioU').val(),
     }
     
     $.ajaxSetup({
@@ -111,6 +112,7 @@ function actualizarUsuario(id){
         $('#tipoUsu').val(data.tipousuario.id);
         $('#areaUsu').val(data.area);  
         $('#sueldoUsu').val(data.sueldo);  
+        $('#fechaInicioUsu').val(data.fechaInicio);
     });
 }
 
@@ -138,6 +140,7 @@ function updateUsuario(){
         area: $('#areaUsu').val(),
         sueldo: $('#sueldoUsu').val(),
         actualizarclave: $('#actualizarclave').val(),
+        fechaInicio: $('#fechaInicioUsu').val(),
     }
     $.ajaxSetup({
         headers: {
@@ -171,6 +174,7 @@ function limpiarUsuario(){
     $('#telefonoU').val('');
     $('#perfilPU').val('');
     $('#sueldoU').val('');
+    $('#fechaInicioU').val('');
 }
 
 /*FUNCIÓN PARA CARGAR LOS USUARIOS EN LA TABLA*/
@@ -312,6 +316,7 @@ function updateUsuarioHistorial(){
         area: $('#areaN').val(),
         sueldo: $('#sueldoN').val(),
         actualizarclave: $('#actualizarclaveN').val(),
+        fechaInicio: $('#fechaInicioN').val(),
     }
     $.ajaxSetup({
         headers: {
@@ -377,6 +382,7 @@ function verUsuario(){
         $('#tipoUsuarioN').val(data.tipousuario.id);
         $('#areaN').val(data.area);
         $('#sueldoN').val(data.sueldo);
+        $('#fechaInicioN').val(data.fechaInicio);
     });
     
 }

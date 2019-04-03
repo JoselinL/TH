@@ -1,4 +1,4 @@
-<div class="modal-body">
+<!-- <div class="modal-body">
   <form id="formregistromodal"  method="post"> 
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="text" name="id" id="idPP1" hidden >
@@ -47,4 +47,4 @@
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
       </div>
 
-  </div>
+  </div> -->

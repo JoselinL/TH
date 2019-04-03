@@ -41,8 +41,9 @@
                     <div class="panel ">
                     <legend class="text-center header">
                         <span class=" text-center"></span>
-                        <span> <b>PERMISOS GENERALES</b> </span> 
+                        <span><h3><b>PERMISOS PENDIENTES</b></h3></span> 
                     </legend>
+
                         <div class="panel-body"> 
                                 @if(isset($edit))
                                 @else

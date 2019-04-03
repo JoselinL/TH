@@ -3,8 +3,26 @@ $(document).ready(function()
           mostrarPermiso($('#idusuario').val());
           mostrarPermisoUsuario($('#idusuario').val());
           mostrarPermisoGeneral();
+          mostrarPermisosAprobados();
+          mostrarPermisosNA();
+          
  });
+
+
+
+/*FUNCION PARA NO INGRESAR FECHAS MAL*/
+
+// $('#fechaFinPer').change(function(){
+//     if ($('#fechaIniPer').val()<=$('#fechaFinPer').val()) {
+//     }else{
+//         alert('Seleccione una fecha valida');
+//         $('#fechaFinPer').val($('#fechaIniPer').val());
+//     }
+
+// });
+
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
+
 function ingresarPermiso(documentop){ 
     //Datos que se envian a la ruta
     var FrmData = {
@@ -19,6 +37,7 @@ function ingresarPermiso(documentop){
         justificacion: documentop,
         persona_id: $('#personaIdPer').val(),
         user_id: $('#idusuario').val(),
+        catalogo: $('#catalogoPer').val(),
     }
     
     $.ajaxSetup({
@@ -54,7 +73,9 @@ function mostrarPermiso(id){
     });
 }
 
+
 function eliminarPermiso(id){
+    
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -70,6 +91,8 @@ function eliminarPermiso(id){
           mostrarPermiso($('#idusuario').val());   // carga los datos en la tabla                       
         }
     });
+
+    
 }
 
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
@@ -89,6 +112,7 @@ function actualizarPermiso(id){
         $('#justPermiso').val(data.justificacion);
         $('#persona_idPermiso').val(data.persona.id);
         $('#idusuario').val(data.usuario.id);
+        $('#catalogoPermiso').val(data.catalogo);
     });
 }
 
@@ -108,6 +132,7 @@ function updatePermiso(){
         justificacion: $('#justPermiso').val(),
         persona_id: $('#persona_idPermiso').val(),
         user_id: $('#idusuario').val(),
+        catalogo: $('#catalogoPermiso').val(),
     }
     $.ajaxSetup({
         headers: {
@@ -139,6 +164,7 @@ function limpiarPermiso(){
     $('#horaFinPer').val('');
     $('#estadoPer').val('');
     $('#justificacionPer').val('');
+    $('#catalogoPer').val('');
 }
 
 /*FUNCIÓN PARA CARGAR LOS USUARIOS EN LA TABLA*/
@@ -146,12 +172,14 @@ function cargarPermiso(data){
  
     $("#tablaPermiso").append(
         "<tr id='fila_cod"+"'>\
+         <td>"+ data.usuario.cedula+"</td>\
          <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
          <td>"+ data.descripcion +"</td>\
          <td>"+ data.fechaInicio +"</td>\
          <td>"+ data.fechaFin +"</td>\
          <td>"+ data.horaInicio +"</td>\
          <td>"+ data.horaFin +"</td>\
+         <td>"+ data.catalogo +"</td>\
          <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
          <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermiso("+data.id+")'><i class='fa fa-trash'></i></button></td>"
     );
@@ -170,12 +198,14 @@ $( "#B_Permiso" ).change(function() {
              $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
                $("#tablaPermiso").append(
                        "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.usuario.cedula+"</td>"+
                        "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
                        "<td>"+ item.descripcion+"</td>"+
                        "<td>"+ item.fechaInicio+"</td>"+
                        "<td>"+ item.fechaFin+"</td>"+
                        "<td>"+ item.horaInicio+"</td>"+
                        "<td>"+ item.horaFin+"</td>"+
+                       "<td>"+ item.catalogo+"</td>"+
                        "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"+
                        "<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermiso("+item.id+")'><i class='fa fa-trash'></i></button></td></tr>"
                 );
@@ -224,28 +254,49 @@ function cargarPDF(data){
 
 
 function cargarPermisoUsuario(data){
- 
+    var estado="";
     var fila='';
 
     fila+='<tr>';
+    fila+='<td>'+ data.usuario.cedula +'</td>';
     fila+='<td>'+ data.usuario.nombres+' '+ data.usuario.apellidos+'</td>';
     fila+='<td>'+ data.descripcion +'</td>';
     fila+='<td>'+ data.fechaInicio +'</td>';
     fila+='<td>'+ data.fechaFin +'</td>';
     fila+='<td>'+ data.horaInicio +'</td>';
     fila+='<td>'+ data.horaFin +'</td>';
-    fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermisoUsuario' onClick='actualizarPermisoUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
+    fila+='<td>'+ data.catalogo +'</td>';
+    fila+="<td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.justificacion+"'><i class='fa fa-download'></i></a></button></td>";
+   if (data.estado==2) {
+       fila+="<td><spam class='label label-success'>Aprobado</spam></td>";
+    }else if (data.estado==1 && data.tthhAprueba != null) {
+        fila+="<td><spam class='label label-warning'>Aprobado por el director de Talento Humano</spam></td>";
+    }else if (data.estado==1 && data.jefeAprueba != null) {
+        fila+="<td><spam class='label label-warning'>Aprobado por el responsable del area</spam></td>";
+    }else if (data.estado<2) {
+        fila+="<td><spam class='label label-warning'>Pendiente</spam></td>";
+    }else if (data.estado==3) {
+        fila+="<td><spam class='label label-danger'>Rechazado</spam></td>";
+    }
+    
+    //fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermisoUsuario' onClick='actualizarPermisoUsuario("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
     //fila+="<td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPermisoUsuario("+data.id+")'><i class='fa fa-trash'></i></button></td>";
     
-    var url="../../TalentoHumano/public/certificado/"+data.usuario.id;
+    var url="../../TalentoHumano/public/certificado/"+data.id;
     if (data.estado==2) {
             fila+="<td class='row'><a href='"+url+"' class='btn btn-success' id='btn-confirm'><i class='fa fa-file-text'></i></a</td>";
     
-    }else{
+    }
+    if (data.estado==3) {
+            fila+='<td class="row"><button type="button" class="btn btn-danger" onClick="vermensajeObservacion('+data.id+')" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-file"></i></button></td>';
+    
+    }
+    else if (data.estado==0 || data.estado==1) {
         //fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
         //fila+="<td class='row'><button type='button' class='btn btn-danger' onClick='vermensajeObservacion("+data.id+")'><i class='fa fa-file'></i></button></td>";
-        fila+='<td class="row"><button type="button" class="btn btn-primary" onClick="vermensajeObservacion('+data.id+')" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-file"></i></button></td>';
+            fila+='<td class="row"><button type="button" class="btn btn-warning" id= "btn-confirm"><i class="fa fa-file-text"></i></button></td>';
     }
+
 
     $("#tablaPermisoUsuario").append(fila);
 
@@ -293,6 +344,7 @@ function actualizarPermisoUsuario(id){
         $('#justPermiso').val(data.justificacion);
         $('#persona_idPermiso').val(data.persona.id);
         $('#idusuario').val(data.usuario.id);
+        $('#catalogoPermiso').val(data.catalogo);
     });
 }
 
@@ -313,6 +365,7 @@ function updatePermisoUsuario(){
         justificacion: $('#justPermiso').val(),
         persona_id: $('#persona_idPermiso').val(),
         user_id: $('#idusuario').val(),
+        catalogo: $('#catalogoPermiso').val(),
     }
     $.ajaxSetup({
         headers: {
@@ -362,13 +415,15 @@ $( "#B_PermisoIndividual" ).change(function() {
              $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
                $("#tablaPermiso").append(
                        "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.usuario.cedula+"</td>"+
                        "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
                        "<td>"+ item.descripcion+"</td>"+
                        "<td>"+ item.fechaInicio+"</td>"+
                        "<td>"+ item.fechaFin+"</td>"+
                        "<td>"+ item.horaInicio+"</td>"+
                        "<td>"+ item.horaFin+"</td>"+
-                       "<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"
+                       "<td>"+ item.catalogo+"</td>"
+                       //"<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPermiso' onClick='actualizarPermiso("+item.id+")'><i class='fa fa-refresh'></i></button></td>"
                 );
                 
          }); 
@@ -395,21 +450,46 @@ function mostrarPermisoGeneral(){
 
 
 
+function mostrarPermisosAprobados(){
+    $.get('listarPermisoAprobado/', function (data) {   //Ruta de listar
+        $("#tablaPermisosAprobados").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarPermisosAprobados(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
+
+function mostrarPermisosNA(){
+    $.get('listarPermisoNA/', function (data) {   //Ruta de listar
+        $("#tablaPermisosNA").html("");
+        $.each(data, function(i, item) { //recorre el data 
+            cargarPermisosNA(item); // carga los datos en la tabla
+        });      
+    });
+}
+
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
 
 
 function cargarPermisoGeneral(data){
+if(data.estado==0 || data.estado==1){
+  $("#txtObservacionPermiso").html("");
     var fila ="";
     fila+="<tr>";
-    fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
+    fila+="<td>"+ data.cedula +"</td>";
+    fila+="<td>"+ data.nombres+" "+ data.apellidos+"</td>";
     fila+="<td>"+ data.descripcion +"</td>";
     fila+="<td>"+ data.fechaInicio +"</td>";
     fila+="<td>"+ data.fechaFin +"</td>";
     fila+="<td>"+ data.horaInicio +"</td>";
     fila+="<td>"+ data.horaFin +"</td>";
+    fila+="<td>"+ data.catalogo +"</td>";
     fila+="<td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.justificacion+"'><i class='fa fa-download'></i></a></button></td>";
     if (data.estado<2) {
-        fila+="<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>";    
+        fila+="<td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>"; 
+
         fila+="<td class='row'><button type='button' class='btn btn-danger' onClicK='verModalReprobarPermiso("+data.id+")'><i class='fa fa-close'></i></button></td>";
     
     }else{
@@ -431,7 +511,51 @@ function cargarPermisoGeneral(data){
     //      <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
     //      <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
     // );
+    } 
 }
+
+
+
+function cargarPermisosAprobados(data){
+if(data.estado==2){
+  $("#txtObservacionPermiso").html("");
+    var fila ="";
+    fila+="<tr>";
+    fila+="<td>"+ data.cedula +"</td>";
+    fila+="<td>"+ data.nombres+" "+ data.apellidos+"</td>";
+    fila+="<td>"+ data.descripcion +"</td>";
+    fila+="<td>"+ data.fechaInicio +"</td>";
+    fila+="<td>"+ data.fechaFin +"</td>";
+    fila+="<td>"+ data.horaInicio +"</td>";
+    fila+="<td>"+ data.horaFin +"</td>";
+    fila+="<td>"+ data.catalogo +"</td>";
+    fila+="<td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.justificacion+"'><i class='fa fa-download'></i></a></button></td>";
+   
+    $("#tablaPermisosAprobados").append(fila);
+ }
+}
+
+
+
+function cargarPermisosNA(data){
+ if(data.estado==3){  
+    $("#txtObservacionPermiso").html("");
+    var fila ="";
+    fila+="<tr>";
+    fila+="<td>"+ data.cedula +"</td>";
+    fila+="<td>"+ data.nombres+" "+ data.apellidos+"</td>";
+    fila+="<td>"+ data.descripcion +"</td>";
+    fila+="<td>"+ data.fechaInicio +"</td>";
+    fila+="<td>"+ data.fechaFin +"</td>";
+    fila+="<td>"+ data.horaInicio +"</td>";
+    fila+="<td>"+ data.horaFin +"</td>";
+    fila+="<td>"+ data.catalogo +"</td>";
+    fila+="<td class='row'><button type='button' class='btn btn-info' id='btn-confirm' ><a href='"+data.justificacion+"'><i class='fa fa-download'></i></a></button></td>";
+   
+    $("#tablaPermisosNA").append(fila);
+ }
+}
+
 
 function AprobarPermiso(_id){
     //alert('yupi');
@@ -499,8 +623,9 @@ function verModalReprobarPermiso(_id) {
     $('#idPermiso_g').val(_id);
     //alert($('#idPermiso_g').val());
     $.get('getObservacion/'+_id,function (data) {
-        $('#txtObservacionPermiso').val(data);
+     $('#txtObservacionPermiso').val(data);
     });
+
     //getObservacion
 
     $('#addObservacionPermiso').modal('show');
@@ -515,7 +640,7 @@ $('#GuardarObservacion').on('click',function () {
     }
     
     //alert(FrmData.idPermiso);//+" ;idusuario: "+FrmData.idusuario+" ;observacion: "+FrmData.observacion);
-    
+    console.log(FrmData);
 
     $.ajaxSetup({
         headers: {
@@ -526,7 +651,7 @@ $('#GuardarObservacion').on('click',function () {
         url: 'addObservacion/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
             //alert('ok');
             $('#addObservacionPermiso').modal('hide');
@@ -545,7 +670,7 @@ function vermensajeObservacion(_id) {
     //alert(_id);
     $.get('getObservacion/'+_id,function (data) {
         $('#txtmensajeObservacion').html(data);
-        //alert(data);
+       
         //alert(_id);
     });
     // $('#mensajeObservacion').modal('show');    

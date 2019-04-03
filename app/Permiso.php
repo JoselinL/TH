@@ -9,7 +9,7 @@ class Permiso extends Model
     public $timestamps = false; 
     protected $table = 'permisos';
     protected $fillable = [
-        'descripcion', 'fechaInicio','fechaFin', 'fechaAprobJefe', 'fechaAprobTTHH', 'horaInicio', 'horaFin', 'estado', 'justificacion', 'persona_id', 'jefeAprueba', 'tthhAprueba', 'user_id'
+        'descripcion', 'fechaInicio','fechaFin', 'fechaAprobJefe', 'fechaAprobTTHH', 'horaInicio', 'horaFin', 'estado', 'justificacion', 'persona_id', 'jefeAprueba', 'tthhAprueba', 'catalogo','user_id','observacion'
     ];
 
 

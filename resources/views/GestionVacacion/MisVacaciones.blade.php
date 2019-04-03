@@ -42,6 +42,49 @@
                         <span class=" text-center"></span>
                         <span> <b>MIS VACACIONES</b> </span> 
                     </legend>
+
+                    <div class="row">
+                               <div class="col-md-3" align="center">
+                               </div>
+                                <div class="col-md-2" align="center">
+                                 <div data-toggle="tooltip" data-placement="top" title="Su solicitud de vacación fue aprobada" style=" height: 80px;
+                                                width:80px;
+                                                background-color: #31B404;
+                                                border-radius: 50%;
+                                                display: inline-block;">
+                                    <i style="margin-top: 16px;color: white" class="fa fa-check fa-fw fa-3x"></i>
+                                   </div>
+                                   <br>
+                                  <label><b>Aprobado</b></label>
+                                </div>
+                                 <div class="col-md-2" align="center">
+                                  <div data-toggle="tooltip" data-placement="top" title="Su solicitud de vacación esta pendiente de aprobación"  style=" height: 80px;
+                                                width:80px;
+                                                background-color: #FACC2E;
+                                                border-radius: 50%;
+                                                display: inline-block;">
+                                    <i style="margin-top: 16px; color: white" class="fa fa-thumb-tack fa-fw fa-3x"></i>
+                                   </div>
+                                  <br>
+                                  <label><b>Pendiente</b></label>
+                                </div>
+                                <div class="col-md-2" align="center">
+                                  <div data-toggle="tooltip" data-placement="top" title="Su solicitud de vacación no fue aprobada" style=" height: 80px;
+                                                width:80px;
+                                                background-color: #DF0101;
+                                                border-radius: 50%;
+                                                display: inline-block;">
+                                    <i style="margin-top: 16px;color: white" class="fa fa-times fa-fw fa-3x"></i>
+                                   </div>
+                                   <br>
+                                  <label><b>No Aprobado</b></label>
+                                </div>
+                                <div class="col-md-3" align="center">
+                               </div>
+                        </div>
+
+
+
                         <div class="panel-body"> 
                                 @if(isset($edit))
                                 @else

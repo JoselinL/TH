@@ -25,7 +25,7 @@
                   <div class="register-box-body"  >
 
 <div class="container">
-            <div class="row">
+            <!-- <div class="row">
                     <div class="col-md-11">
                         <div class="panel panel-default">
                         <legend class="text-center header">
@@ -37,14 +37,14 @@
                                 @if(isset($edit))  
                                     @include('GestionPP.ModificarPP')
                                 @else
-                                    @include('GestionPP.FormPP')
+                                    @include('GestionPP.FormPP') 
                                 @endif
                                 
                             </div>
                             
                         </div>
                     </div>
-            </div>
+            </div> -->
             <br><br>
 
             <div class="row">
@@ -52,7 +52,7 @@
                     <div class="panel ">
                     <legend class="text-center header">
                         <span class=" text-center"></span>
-                        <span> <b>PERIODO-PERSONA</b></span> 
+                        <span> <b>CANTIDAD DE DÍAS POR PERIODO</b></span> 
                     </legend>
                         <div class="panel-body"> 
                                 @if(isset($edit))
@@ -79,7 +79,7 @@
       <div>
      </div>
   </div>
-  @include('GestionPP.ModalPP')
+
 @endsection
                                  
             <script>

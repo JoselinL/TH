@@ -10,6 +10,7 @@ use App\PeriodoPersona;
 use App\VacacionPeriodo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class Vacaciones extends Controller
@@ -55,6 +56,26 @@ class Vacaciones extends Controller
         $persona = Persona::with('vacacion')->get();  
         $usuario = User::with('vacacion')->get(); 
         return view('GestionVacacion\VacacionesGenerales')->with(['vacacion'=> $vacacion, 'persona'=>$persona, 'usuario'=>$usuario ]);
+    }
+
+
+
+    public function indexVacacionAprobada()
+    {
+        $vacacion = Vacacion::with('persona', 'usuario')->get();
+        $persona = Persona::with('vacacion')->get();  
+        $usuario = User::with('vacacion')->get(); 
+        return view('GestionVacacion\VacacionesAprobadas')->with(['vacacion'=> $vacacion, 'persona'=>$persona, 'usuario'=>$usuario ]);
+    }
+
+
+
+    public function indexVacacionNA()
+    {
+        $vacacion = Vacacion::with('persona', 'usuario')->get();
+        $persona = Persona::with('vacacion')->get();  
+        $usuario = User::with('vacacion')->get(); 
+        return view('GestionVacacion\VacacionesNA')->with(['vacacion'=> $vacacion, 'persona'=>$persona, 'usuario'=>$usuario ]);
     }
 
     /**
@@ -130,10 +151,86 @@ class Vacaciones extends Controller
 
     public function listarVacacionGeneral()
     {
-        $vacacionvar = Vacacion::with(['persona', 'usuario'])->where('estado','<','2')->get();
+        $tipousu=Auth::user()->tipoUsuario_id;
+        $tipo=Auth::user()->area;
+        if ($tipousu==4) {
+              $vacacionvar = DB::table('vacaciones')
+                ->select('vacaciones.user_id','vacaciones.descripcion','vacaciones.fechaInicio'
+                     ,'vacaciones.id','vacaciones.fechaFin','vacaciones.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'vacaciones.user_id')
+                ->get();
+        }
+        
+        else{
+            $vacacionvar = DB::table('vacaciones')
+                ->select('vacaciones.user_id','vacaciones.descripcion','vacaciones.fechaInicio'
+                     ,'vacaciones.id','vacaciones.fechaFin','vacaciones.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'vacaciones.user_id')
+                ->where('user.area', $tipo)
+                ->get();
+        }
+     
+        //$permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
         return response()->json($vacacionvar);
     }
 
+
+    public function listarVacacionAprobada()
+    {
+        $tipousu=Auth::user()->tipoUsuario_id;
+        $tipo=Auth::user()->area;
+        if ($tipousu==4) {
+              $vacacionvar = DB::table('vacaciones')
+                ->select('vacaciones.user_id','vacaciones.descripcion','vacaciones.fechaInicio'
+                     ,'vacaciones.id','vacaciones.fechaFin','vacaciones.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'vacaciones.user_id')
+                ->get();
+        }
+        
+        else{
+            $vacacionvar = DB::table('vacaciones')
+                ->select('vacaciones.user_id','vacaciones.descripcion','vacaciones.fechaInicio'
+                     ,'vacaciones.id','vacaciones.fechaFin','vacaciones.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'vacaciones.user_id')
+                ->where('user.area', $tipo)
+                ->get();
+        }
+     
+        //$permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
+        return response()->json($vacacionvar);
+    }
+
+
+    public function listarVacacionNA()
+    {
+        $tipousu=Auth::user()->tipoUsuario_id;
+        $tipo=Auth::user()->area;
+        if ($tipousu==4) {
+              $vacacionvar = DB::table('vacaciones')
+                ->select('vacaciones.user_id','vacaciones.descripcion','vacaciones.fechaInicio'
+                     ,'vacaciones.id','vacaciones.fechaFin','vacaciones.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'vacaciones.user_id')
+                ->get();
+        }
+        
+        else{
+            $vacacionvar = DB::table('vacaciones')
+                ->select('vacaciones.user_id','vacaciones.descripcion','vacaciones.fechaInicio'
+                     ,'vacaciones.id','vacaciones.fechaFin','vacaciones.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'vacaciones.user_id')
+                ->where('user.area', $tipo)
+                ->get();
+        }
+     
+        //$permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
+        return response()->json($vacacionvar);
+    }
 
 
     public function listarVacacionIndividual($idusuario1)
@@ -222,7 +319,7 @@ public function modificarVacacion(Request $request){
             # code...
             if ($consulta->fechaAprobacionJefe==null && $user->tipousuario->tipo=="Jefe"){
                 $consulta->fechaAprobacionJefe=Carbon::now()->toDateTimeString();
-                $consulta->jefeAprueba=$user->nombres;
+                $consulta->jefeAprueba=$user->cedula;
                 $consulta->estado=$num; 
                 $consulta->save();
                    
@@ -230,7 +327,7 @@ public function modificarVacacion(Request $request){
             }else if ($consulta->fechaAprobacionTTHH==null && $user->tipousuario->tipo=="DirectorTH") {
 
                 $consulta->fechaAprobacionTTHH=Carbon::now()->toDateTimeString();
-                $consulta->tthhAprueba=$user->nombres;
+                $consulta->tthhAprueba=$user->cedula;
                 $consulta->estado=$num; 
                 $consulta->save();  
                   
@@ -290,6 +387,7 @@ public function modificarVacacion(Request $request){
         $user = User::with('tipousuario')->findOrFail($request->idusuario);
 
         $consulta->observacion= $user->apellidos." ".$user->nombres." : ".$request->observacion;
+        $consulta->estado=3;
         $consulta->save();
 
         return response()->json($consulta);
@@ -298,7 +396,12 @@ public function modificarVacacion(Request $request){
     public function getObservacionVacacion($id)
     {
         $consulta = Vacacion::findOrFail($id);
-        return response()->json($consulta->observacion);
+        $observacion="";
+        if ($consulta!=null) {
+           $observacion=$consulta->observacion;
+        }
+      
+        return response()->json($observacion);
     }
 }
 

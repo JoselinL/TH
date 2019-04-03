@@ -77,7 +77,11 @@
         <div class="col-md-4">
              <div class="form-group has-feedback">
                 <label> <b>Nacionalidad:</b></label>
-                <input type="text" class="form-control" id="NacUsu" name="nacionalidad"required />
+                <select class="form-control" id="NacUsu" name="nacionalidad" >
+                        <option disabled selected>Nacionalidad</option>
+                        <option>Ecuatoriana</option>
+                        <option>Otra</option>
+                </select>
               </div>
         </div>
 
@@ -189,6 +193,13 @@
              <div class="form-group has-feedback">
                 <label> <b>Sueldo:</b></label>
                 <input type="text" class="form-control" id="sueldoUsu" name="sueldo"required />
+              </div>
+        </div>
+
+        <div class="col-md-4">
+             <div class="form-group has-feedback">
+                <label> <b>Fecha de contratación:</b></label>
+                <input type="date" class="form-control" id="fechaInicioUsu" name="fechaInicio"required />
               </div>
         </div>
 

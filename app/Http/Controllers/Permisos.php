@@ -9,6 +9,8 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Illuminate\Support\Facades\Auth;
+use DateTime;
 
 class Permisos extends Controller
 {
@@ -53,7 +55,22 @@ class Permisos extends Controller
         return view('GestionPermiso\PermisosGenerales')->with(['permiso'=> $permiso, 'persona'=>$persona, 'usuario'=>$usuario ]);
     }
 
+    public function indexPA()
+    {
+        $permiso = Permiso::with('persona', 'usuario')->get();
+        $persona = Persona::with('permiso')->get();  
+        $usuario = User::with('permiso')->get(); 
+        return view('GestionPermiso\PermisosAprobados')->with(['permiso'=> $permiso, 'persona'=>$persona, 'usuario'=>$usuario ]);
+    }
 
+
+    public function indexPNA()
+    {
+        $permiso = Permiso::with('persona', 'usuario')->get();
+        $persona = Persona::with('permiso')->get();  
+        $usuario = User::with('permiso')->get(); 
+        return view('GestionPermiso\PermisosNoAprobados')->with(['permiso'=> $permiso, 'persona'=>$persona, 'usuario'=>$usuario ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -100,6 +117,7 @@ class Permisos extends Controller
         $permiso->justificacion = $request->justificacion;
         $permiso->jefeAprueba = null;
         $permiso->tthhAprueba = null;
+        $permiso->catalogo = $request->catalogo;
         // $user=User::findOrFail($request->idusuario);
         // $permiso->jefeAprueba=$user->nombres;
 
@@ -112,6 +130,7 @@ class Permisos extends Controller
         $permisovar = Permiso::with(['persona','usuario'])->find($permiso->id);
     
         return json_encode(array('succes'=> true, 'id'=> $permisovar->id));
+        
     }
 
     /**
@@ -150,9 +169,100 @@ class Permisos extends Controller
 
     public function listarPermisoGeneral()
     {
-        $permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
+        $tipousu=Auth::user()->tipoUsuario_id;
+        $tipo=Auth::user()->area;
+        if ($tipousu==4) {
+              $permisovar = DB::table('permisos')
+                ->select('permisos.user_id','permisos.descripcion','permisos.fechaInicio'
+                     ,'permisos.id','permisos.justificacion'
+                    ,'permisos.fechaFin','permisos.horaInicio'
+                    ,'permisos.horaFin','permisos.catalogo','permisos.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'permisos.user_id')
+                ->get();
+        }
+        
+        else{
+            $permisovar = DB::table('permisos')
+                ->select('permisos.user_id','permisos.descripcion','permisos.fechaInicio'
+                     ,'permisos.id','permisos.justificacion'
+                    ,'permisos.fechaFin','permisos.horaInicio'
+                    ,'permisos.horaFin','permisos.catalogo','permisos.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'permisos.user_id')
+                ->where('user.area', $tipo)
+                ->get();
+        }
+     
+        //$permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
         return response()->json($permisovar);
     }
+
+
+     public function listarPermisoAprobado()
+    {
+        $tipousu=Auth::user()->tipoUsuario_id;
+        $tipo=Auth::user()->area;
+        if ($tipousu==4) {
+              $permisovar = DB::table('permisos')
+                ->select('permisos.user_id','permisos.descripcion','permisos.fechaInicio'
+                     ,'permisos.id','permisos.justificacion'
+                    ,'permisos.fechaFin','permisos.horaInicio'
+                    ,'permisos.horaFin','permisos.catalogo','permisos.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'permisos.user_id')
+                ->get();
+        }
+        
+        else{
+            $permisovar = DB::table('permisos')
+                ->select('permisos.user_id','permisos.descripcion','permisos.fechaInicio'
+                     ,'permisos.id','permisos.justificacion'
+                    ,'permisos.fechaFin','permisos.horaInicio'
+                    ,'permisos.horaFin','permisos.catalogo','permisos.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'permisos.user_id')
+                ->where('user.area', $tipo)
+                ->get();
+        }
+     
+        //$permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
+        return response()->json($permisovar);
+    }
+
+
+
+    public function listarPermisoNA()
+    {
+        $tipousu=Auth::user()->tipoUsuario_id;
+        $tipo=Auth::user()->area;
+        if ($tipousu==4) {
+              $permisovar = DB::table('permisos')
+                ->select('permisos.user_id','permisos.descripcion','permisos.fechaInicio'
+                     ,'permisos.id','permisos.justificacion'
+                    ,'permisos.fechaFin','permisos.horaInicio'
+                    ,'permisos.horaFin','permisos.catalogo','permisos.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'permisos.user_id')
+           
+                ->get();
+        }else{
+            $permisovar = DB::table('permisos')
+                ->select('permisos.user_id','permisos.descripcion','permisos.fechaInicio'
+                     ,'permisos.id','permisos.justificacion'
+                    ,'permisos.fechaFin','permisos.horaInicio'
+                    ,'permisos.horaFin','permisos.catalogo','permisos.estado', 'user.cedula','user.nombres','user.apellidos','user.area'
+                )
+                ->join('user', 'user.id', '=', 'permisos.user_id')
+                ->where('user.area', $tipo)
+                ->get();
+        }
+     
+        //$permisovar = Permiso::with(['persona', 'usuario'])->where('estado','<','2')->get();
+        return response()->json($permisovar);
+    }
+
+
 
 
     public function listarPermisoUsuario($idusuario)
@@ -174,13 +284,22 @@ class Permisos extends Controller
 
      public function cargarPDF($idpdf)
     {
-       $permisovar = Permiso::with(['persona','usuario'])->where('user_id',$idpdf)
-        ->get(); 
+       //$permisovar = Permiso::with(['persona','usuario'])->where('user_id',$idpdf)
+        //->get(); 
+        //$persona=User::findOrFail($idpdf);
+        $consultapermiso = DB::table('user')
+        ->join('permisos', 'permisos.user_id', '=', 'user.id')
+        ->join('tipousuario', 'tipousuario.id','=','user.tipoUsuario_id')
+        ->select('user.cedula', 'user.nombres', 'user.apellidos','tipousuario.tipo','permisos.catalogo','permisos.fechaInicio','permisos.fechaFin','permisos.horaInicio','permisos.horaFin','permisos.catalogo')
+        ->where('permisos.id', $idpdf)
+        ->get();
+        
+        $pdf = PDF::loadView('GestionPermiso\MostrarPDF', ['consultapermiso'=>$consultapermiso]);
 
-        $persona=User::findOrFail($idpdf);
-        $pdf = PDF::loadView('GestionPermiso\MostrarPDF', ['permiso'=>$permisovar, 'persona'=>$persona]);
         return $pdf->download('certificado.pdf');
 
+        
+        //return response()->json($consultapermiso);
     }
 
 
@@ -200,6 +319,7 @@ class Permisos extends Controller
         $permiso = Permiso::find($id);
         return response()->json($permiso);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -222,6 +342,7 @@ class Permisos extends Controller
         $permiso->justificacion = $request->justificacion;
         $permiso->persona_id = $request->persona_id;
         $permiso->user_id = $request->user_id;
+        $permiso->catalogo = $request->catalogo;
         $permiso->save();
         return response()->json($permiso);  
     }
@@ -247,12 +368,12 @@ class Permisos extends Controller
             # code...
             if ($consulta->fechaAprobJefe==null && $user->tipousuario->tipo=="Jefe"){
                 $consulta->fechaAprobJefe=Carbon::now()->toDateTimeString();
-                $consulta->jefeAprueba=$user->nombres;
+                $consulta->jefeAprueba=$user->cedula;
                 $consulta->estado=$consulta->estado+1; 
                 $consulta->save();                
             }else if ($consulta->fechaAprobTTHH==null && $user->tipousuario->tipo=="DirectorTH") {
                 $consulta->fechaAprobTTHH=Carbon::now()->toDateTimeString();
-                $consulta->tthhAprueba=$user->nombres;
+                $consulta->tthhAprueba=$user->cedula;
                 $consulta->estado=$consulta->estado+1; 
                 $consulta->save();        
             }
@@ -267,6 +388,7 @@ class Permisos extends Controller
         $user = User::with('tipousuario')->findOrFail($request->idusuario);
 
         $consulta->observacion= $user->apellidos." ".$user->nombres." : ".$request->observacion;
+        $consulta->estado=3;
         $consulta->save();
 
         return response()->json($consulta);
@@ -275,7 +397,12 @@ class Permisos extends Controller
     public function getObservacion($id)
     {
         $consulta = Permiso::findOrFail($id);
-        return response()->json($consulta->observacion);
+        $observacion="";
+        if ($consulta!=null) {
+           $observacion=$consulta->observacion;
+        }
+      
+        return response()->json($observacion);
     }
 }
 

@@ -15,9 +15,18 @@
       <th colspan="12" align="center" style="font-size: 18px"><h3>CERTIFICADO DE VACACIONES</h3></th>
     </tr>
 </table>
+
+	<label style="text-align: left;">
+		<?php 
+		echo "Chone, ";
+		echo $fecha_actual=date("d/m/Y"); 
+		?>	
+	</label>
+
 	<label style="text-align: center;"><h4>DIRECCIÓN GENERAL DE TALENTO HUMANO </h4></label>
 	<br></br>
-	<span>
+
+	<span style="text-align: justify;">
 		Yo Edson José Vidal Párraga director general de la dirección de Talento Humano del GAD Municipal del cantón Chone certifico que <?php echo $persona->nombres.' '.$persona->apellidos ?> con cedula de identidad número {{$persona->cedula}} iniciara sus vacaciones el 04-02-2019  hasta el 18-03-2019 del presente año.
 	</span>
 <br>

@@ -64,15 +64,24 @@ Route::get('/listarPeriodo','Periodos@listarPeriodo');
 
 //---------------------------------------------------------------PERMISO
 Route::resource('/permiso', 'Permisos'); 
+
 Route::get('/permiso', 'Permisos@index');
 Route::get('/mispermisos', 'Permisos@indexU');
 Route::get('/permisosgenerales', 'Permisos@indexP');
+Route::get('/permisosaprobados', 'Permisos@indexPA');
+Route::get('/permisosnoaprobados', 'Permisos@indexPNA');
+
 Route::get('/buscarPermiso/{descripcion?}','Permisos@buscarPermiso');
+
 Route::get('/actualizarPermiso/{id}','Permisos@actualizarPermiso');
+
 Route::get('/listarPermiso/{idusuario}','Permisos@listarPermiso');
 Route::get('/listarPermisoUsuario/{idusuario}','Permisos@listarPermisoUsuario');
 Route::post('/modificarPermiso/{frmData}', 'Permisos@modificarPermiso');  
 Route::get('/listarPermisoGeneral','Permisos@listarPermisoGeneral');
+Route::get('/listarPermisoAprobado','Permisos@listarPermisoAprobado');
+Route::get('/listarPermisoNA','Permisos@listarPermisoNA');
+
 Route::get('/certificado/{idpdf}','Permisos@cargarPDF');
 
 Route::post('/addObservacion/{data}','Permisos@addObservacion');
@@ -95,14 +104,21 @@ Route::post('/guardarMarcacion','Marcaciones@guardarMarcacion');
 
 //--------------------------------------------------------------------------------VACACION
 Route::resource('/vacaciones', 'Vacaciones');
+
 Route::get('/vacaciones', 'Vacaciones@index');
 Route::get('/misvacaciones', 'Vacaciones@indexVacacionIndividual');
 Route::get('/vacacionesgenerales', 'Vacaciones@indexVacacionGeneral');
+Route::get('/vacacionesaprobadas', 'Vacaciones@indexVacacionAprobada');
+Route::get('/vacacionesnoaprobadas', 'Vacaciones@indexVacacionNA');
+
 Route::get('/buscarVacacion/{descripcion?}','Vacaciones@buscarVacacion');
 Route::get('/actualizarVacacion/{id}','Vacaciones@actualizarVacacion');
+
 Route::get('/listarVacacion/{idusuario1}','Vacaciones@listarVacacion');
 Route::get('/listarVacacionIndividual/{idusuario1}','Vacaciones@listarVacacionIndividual');
 Route::get('/listarVacacionGeneral','Vacaciones@listarVacacionGeneral');
+Route::get('/listarVacacionAprobada','Vacaciones@listarVacacionAprobada');
+Route::get('/listarVacacionNA','Vacaciones@listarVacacionNA');
 
 Route::post('/modificarVacacion/{frmData}', 'Vacaciones@modificarVacacion');  
 
@@ -118,7 +134,7 @@ Route::resource('/periodopersona', 'PeriodoPersonas');
 Route::get('/periodopersona', 'PeriodoPersonas@index');
 Route::get('/actualizarPP/{id}','PeriodoPersonas@actualizarPP');
 Route::get('/listarPP','PeriodoPersonas@listarPP');
-
+Route::get('/buscarPP/{cedula?}','PeriodoPersonas@buscarPP');
 Route::get('/listarVP/{id}','PeriodoPersonas@listarVP');
 //---------------------------------------------------------------------
 

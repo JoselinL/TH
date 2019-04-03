@@ -29,7 +29,7 @@
 
                   <div class="register-box-body"  >
 
-<div class="container">
+          <div class="container">
             <div class="row">
                    
             </div>
@@ -40,7 +40,7 @@
                     <div class="panel ">
                     <legend class="text-center header">
                         <span class=" text-center"></span>
-                        <span> <b>VACACIONES GENERALES</b> </span> 
+                        <span> <b>VACACIONES PENDIENTES</b> </span> 
                     </legend>
                         <div class="panel-body"> 
                                 @if(isset($edit))

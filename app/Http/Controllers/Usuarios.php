@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\TipoUsuario;
+
 use PDF;
 
 class Usuarios extends Controller
@@ -90,6 +91,7 @@ class Usuarios extends Controller
         $usuario->cedula = $request->cedula;
         $usuario->area = $request->area;
         $usuario->sueldo = $request->sueldo;
+        $usuario->fechaInicio = $request->fechaInicio;
         $usuario->save();
         $usuariovar = User::with(['tipousuario'])->find($usuario->id);
         return response()->json($usuariovar);
@@ -115,6 +117,7 @@ class Usuarios extends Controller
 
     public function listarUsuario()
     {
+        
         $usuariovar = User::with(['tipousuario'])->get();
         return response()->json($usuariovar);
     }
@@ -185,6 +188,7 @@ class Usuarios extends Controller
         $usuario->cedula = $request->cedula;
         $usuario->area = $request->area;
         $usuario->sueldo = $request->sueldo;
+        $usuario->fechaInicio = $request->fechaInicio;
 
         if ($request->actualizarclave=="1") {
             $usuario->password=bcrypt($request->password);

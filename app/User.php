@@ -19,7 +19,7 @@ class User extends Authenticatable
     public $timestamps = false; 
     protected $table = 'user';
     protected $fillable = [
-        'nombres', 'apellidos', 'password', 'email', 'tipoUsuario_id', 'fechaNacimiento', 'estadoCivil', 'sexo', 'nacionalidad', 'direccion', 'telefono', 'tipoSangre', 'nivelEstudio', 'perfilProfesional','cedula','area','sueldo',
+        'nombres', 'apellidos', 'password', 'email', 'tipoUsuario_id', 'fechaNacimiento', 'estadoCivil', 'sexo', 'nacionalidad', 'direccion', 'telefono', 'tipoSangre', 'nivelEstudio', 'perfilProfesional','cedula','area','sueldo','fechaInicio',
     ];
 
     /**

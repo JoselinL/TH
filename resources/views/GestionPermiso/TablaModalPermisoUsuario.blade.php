@@ -55,6 +55,19 @@
         </div>
 
 
+        <div class="col-md-4">
+             <div class="form-group has-feedback">
+                <label> <b>Razón del permiso:</b></label>
+                <select class="form-control" id="catalogoPermiso" name="catalogo" >
+                        <option disabled selected>Razón del permiso</option>
+                        <option>Particular</option>
+                        <option>Calamidad doméstica</option>
+                        <option>Enfermedad</option>
+                        <option>Otro</option>
+                </select>
+              </div>
+        </div>
+
          <input type="hidden" name="" id="idusuario">
 
 

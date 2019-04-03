@@ -4,6 +4,8 @@ $(document).ready(function()
           //mostrarDisponibilidad($('#idusuario1').val());
           mostrarVacacionIndividual($('#idusuario1').val());
           mostrarVacacionGeneral();
+          mostrarVacacionAprobada();
+          mostrarVacacionNA();
           
  });
 /*FUNCION PARA INGRESAR LOS USUARIOS*/
@@ -137,6 +139,7 @@ function cargarVacacion(data){
  
     $("#tablaVacacion").append(
         "<tr id='fila_cod"+"'>\
+         <td>"+ data.usuario.cedula +"</td>\
          <td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>\
          <td>"+ data.descripcion +"</td>\
          <td>"+ data.fechaInicio +"</td>\
@@ -171,6 +174,7 @@ $( "#B_Vacacion" ).keyup(function() {
                 //console.log(item.descripcion);
                 var fila='';
                 fila+= "<tr id='"+item.id+"'>";
+                fila+="<td>"+ item.usuario.cedula+"</td>";
                 fila+="<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>";
                 fila+="<td>"+ item.descripcion+"</td>";
                 fila+="<td>"+ item.fechaInicio+"</td>";
@@ -281,25 +285,42 @@ function cargarCertificado(data){
 
 
 function cargarVacacionIndividual(data){
- 
+    var estado="";
     var fila='';
 
     fila+='<tr>';
+    fila+='<td>'+ data.usuario.cedula +'</td>';
     fila+='<td>'+ data.usuario.nombres+' '+ data.usuario.apellidos+'</td>';
     fila+='<td>'+ data.descripcion +'</td>';
     fila+='<td>'+ data.fechaInicio +'</td>';
     fila+='<td>'+ data.fechaFin +'</td>';
-    fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacionIndividual' onClick='actualizarVacacionIndividual("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
-   
-    
-    
+    //fila+="<td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarVacacionIndividual' onClick='actualizarVacacionIndividual("+data.id+")'><i class='fa fa-refresh'></i></button></td>";
+   if (data.estado==2) {
+       fila+="<td><spam class='label label-success'>Aprobado</spam></td>";
+    }else if (data.estado==1 && data.tthhAprueba != null) {
+        fila+="<td><spam class='label label-warning'>Aprobado por el director de Talento Humano</spam></td>";
+    }else if (data.estado==1 && data.jefeAprueba != null) {
+        fila+="<td><spam class='label label-warning'>Aprobado por el responsable del area</spam></td>";
+    }else if (data.estado<2) {
+        fila+="<td><spam class='label label-warning'>Pendiente</spam></td>";
+    }else if (data.estado==3) {
+        fila+="<td><spam class='label label-danger'>Rechazado</spam></td>";
+    }
+
+
     var url="../../TalentoHumano/public/certificado_vacaciones/"+data.usuario.id;
     if (data.estado==2) {
-        fila+="<td class='row'><a href='"+url+"' class='btn btn-success' id='btn-confirm'><i class='fa fa-file-text'></i></a</td>";
-
-    }else{
-        fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
-
+            fila+="<td class='row'><a href='"+url+"' class='btn btn-success' id='btn-confirm'><i class='fa fa-file-text'></i></a</td>";
+    
+    }
+    if (data.estado==3) {
+            fila+='<td class="row"><button type="button" class="btn btn-danger" onClick="vermensajeObservacion('+data.id+')" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-file"></i></button></td>';
+    
+    }
+    else if (data.estado==0 || data.estado==1) {
+        //fila+="<td class='row'><button type='button' class='btn btn-success' disabled><i class='fa fa-file-pdf-o '></i></button></td>";
+        //fila+="<td class='row'><button type='button' class='btn btn-danger' onClick='vermensajeObservacion("+data.id+")'><i class='fa fa-file'></i></button></td>";
+            fila+='<td class="row"><button type="button" class="btn btn-warning" id= "btn-confirm"><i class="fa fa-file-text"></i></button></td>';
     }
 
     $("#tablaVacacionUsuario").append(fila);
@@ -409,6 +430,7 @@ $( "#B_VacacionIndividual" ).change(function() {
              $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
                $("#tablaVacacionUsuario").append(
                        "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.usuario.cedula+"</td>"+
                        "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
                        "<td>"+ item.descripcion+"</td>"+
                        "<td>"+ item.fechaInicio+"</td>"+
@@ -437,12 +459,38 @@ function mostrarVacacionGeneral(){
 }
 
 
+function mostrarVacacionAprobada(){
+    $.get('listarVacacionAprobada/', function (data) {   //Ruta de listar
+        $("#tablaVacacionAprobada").html("");
+        $.each(data, function(i, item) { //recorre el data 
+
+            cargarVacacionAprobada(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
+
+function mostrarVacacionNA(){
+    $.get('listarVacacionNA/', function (data) {   //Ruta de listar
+        $("#tablaVacacionNA").html("");
+        $.each(data, function(i, item) { //recorre el data 
+
+            cargarVacacionNA(item); // carga los datos en la tabla
+        });      
+    });
+}
+
+
 
 /*MUESTRA LOS DATOS DEL USUARIO SELECCIONADO  EN EL MODAL */
 function cargarVacacionGeneral(data){
+ if(data.estado==0 || data.estado==1){
+    $("#txtmensajeObservacionVacacion").html("");
     var fila ="";
     fila+="<tr>";
-    fila+="<td>"+ data.usuario.nombres+" "+ data.usuario.apellidos+"</td>";
+    fila+="<td>"+ data.cedula +"</td>";
+    fila+="<td>"+ data.nombres+" "+ data.apellidos+"</td>";
     fila+="<td>"+ data.descripcion +"</td>";
     fila+="<td>"+ data.fechaInicio +"</td>";
     fila+=" <td>"+ data.fechaFin +"</td>";
@@ -470,12 +518,38 @@ function cargarVacacionGeneral(data){
     //      <td class='row'><button type='button' class='btn btn-success' onClick='AprobarPermiso("+data.id+")'><i class='fa fa-check'></i></button></td>\
     //      <td class='row'><button type='button' class='btn btn-danger' onClick=''><i class='fa fa-close'></i></button></td>"
     // );
+ }
 }
 
 
+function cargarVacacionAprobada(data){
+    if(data.estado==2){
+    var fila ="";
+    fila+="<tr>";
+    fila+="<td>"+ data.cedula +"</td>";
+    fila+="<td>"+ data.nombres+" "+ data.apellidos+"</td>";
+    fila+="<td>"+ data.descripcion +"</td>";
+    fila+="<td>"+ data.fechaInicio +"</td>";
+    fila+=" <td>"+ data.fechaFin +"</td>";
+    
+    $("#tablaVacacionAprobada").append(fila);
+    }
+}
 
 
-
+function cargarVacacionNA(data){
+    if(data.estado==3){ 
+    var fila ="";
+    fila+="<tr>";
+    fila+="<td>"+ data.cedula +"</td>";
+    fila+="<td>"+ data.nombres+" "+ data.apellidos+"</td>";
+    fila+="<td>"+ data.descripcion +"</td>";
+    fila+="<td>"+ data.fechaInicio +"</td>";
+    fila+=" <td>"+ data.fechaFin +"</td>";
+    
+    $("#tablaVacacionNA").append(fila);
+   } 
+}
 
 
 
@@ -488,6 +562,7 @@ $( "#B_VacacionGeneral" ).change(function() {
              $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
                $("#tablaVacacionGeneral").append(
                        "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.usuario.cedula+"</td>"+
                        "<td>"+ item.usuario.nombres+" "+ item.usuario.apellidos+"</td>"+
                        "<td>"+ item.descripcion+"</td>"+
                        "<td>"+ item.fechaInicio+"</td>"+
@@ -547,9 +622,7 @@ function verModalReprobarVacacion(_id) {
     });
     //getObservacion
 
-    $('#addObservacionVacacion').modal('show');
-    
-    
+    $('#addObservacionVacacion').modal('show');   
 }
 
 
@@ -561,7 +634,6 @@ $('#GuardarObservacionVacacion').on('click',function () {
     }
     
     //alert(FrmData.idPermiso);//+" ;idusuario: "+FrmData.idusuario+" ;observacion: "+FrmData.observacion);
-    
 
     $.ajaxSetup({
         headers: {

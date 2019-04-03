@@ -103,9 +103,6 @@
                      
                     <li><a href="{{ url('/capacitacion') }}"><i class='fa fa-file-text'></i>Capacitación</a></li>
 
-                    <li><a href="{{ url('/permiso') }}"><i class='fa fa-pencil-square'></i>Permiso</a></li>
-
-                    <li><a href="{{ url('/vacaciones') }}"><i class='fa fa-briefcase'></i>Vacaciones</a></li>
                 </ul>
             </li>
 
@@ -119,15 +116,25 @@
 
                     @if(Auth::user()->tipoUsuario_id=='1' || Auth::user()->tipoUsuario_id=='3' || Auth::user()->tipoUsuario_id=='4')
 
-                    <li><a href="{{ url('/permisosgenerales') }}"><i class='fa fa-pencil-square'></i>Permisos Generales</a></li>
+                    <li><a href="#">PERMISOS GENERALES</a></li>
+
+                    <li><a href="{{ url('/permisosgenerales') }}"><i class='fa fa-thumb-tack'></i>Permisos Pendientes</a></li>
+
+                    <li><a href="{{ url('/permisosaprobados') }}"><i class='fa fa-check'></i>Permisos Aprobados</a></li>
+
+                    <li><a href="{{ url('/permisosnoaprobados') }}"><i class='fa fa-times'></i>Permisos No Aprobados</a></li>
 
                      @endif
 
-                    <li><a href="{{ url('/mispermisos') }}"><i class='fa fa-pencil-square'></i>Mis Permisos</a></li>
+                    <li><a href="#">MIS PERMISOS</a></li>
+
+                    <li><a href="{{ url('/mispermisos') }}"><i class='fa fa-th-list'></i>Listado de Permisos</a></li>
+
+                    <li><a href="#">SOLICITAR PERMISO</a></li>
+
+                    <li><a href="{{ url('/permiso') }}"><i class='fa fa-plus-square'></i>Crear Solicitud</a></li>
                 </ul>
             </li>
-
-
 
 
             <li class="treeview">
@@ -138,11 +145,23 @@
 
                     @if(Auth::user()->tipoUsuario_id=='1' || Auth::user()->tipoUsuario_id=='3' || Auth::user()->tipoUsuario_id=='4')
 
-                    <li><a href="{{ url('/vacacionesgenerales') }}"><i class='fa fa-pencil-square'></i>Vacaciones Generales</a></li>
+                    <li><a href="#">VACACIONES GENERALES</a></li>
+
+                    <li><a href="{{ url('/vacacionesgenerales') }}"><i class='fa fa-thumb-tack'></i>Vacaciones Pendientes</a></li>
+
+                    <li><a href="{{ url('/vacacionesaprobadas') }}"><i class='fa fa-check'></i>Vacaciones Aprobadas</a></li>
+
+                    <li><a href="{{ url('/vacacionesnoaprobadas') }}"><i class='fa fa-times'></i>Vacaciones No Aprobadas</a></li>
 
                      @endif
 
-                    <li><a href="{{ url('/misvacaciones') }}"><i class='fa fa-pencil-square'></i>Mis Vacaciones</a></li>
+                    <li><a href="#">MIS VACACIONES</a></li>
+
+                    <li><a href="{{ url('/misvacaciones') }}"><i class='fa fa-th-list'></i>Listado de Vacaciones</a></li>
+
+                    <li><a href="#">SOLICITAR VACACIONES</a></li>
+
+                    <li><a href="{{ url('/vacaciones') }}"><i class='fa fa-plus-square'></i>Crear Solicitud</a></li>
                 </ul>
             </li>
 

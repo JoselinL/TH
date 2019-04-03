@@ -16,7 +16,7 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group has-feedback">
                 <label for="descripcion"><b>Descripción:</b></label>
                 <input type="text" class="form-control" placeholder="Ingrese la descripción" name="descripcion" id="descripcionPer" value="{{ old('descripcion') }}"/>
@@ -25,10 +25,11 @@
                 @if($errors->has('descripcion'))
                 <span style='color:red;'> {{ $errors->first('descripcion') }} </span>
                 @endif
-
             </div>
+        </div>
 
 
+        <div class="row">
              <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="fechaInicio"><b>Fecha de inicio:</b></label>
@@ -38,13 +39,9 @@
                 @if($errors->has('fechaInicio'))
                 <span style='color:red;'> {{ $errors->first('fechaInicio') }} </span>
                 @endif
-
             </div>
-        </div>
+        
 
-
-        <div class="row">
-           
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="fechaFin"><b>Fecha de finalización:</b></label>
@@ -54,9 +51,11 @@
                 @if($errors->has('fechaFin'))
                 <span style='color:red;'> {{ $errors->first('fechaFin') }} </span>
                 @endif
-
             </div>
+        </div>
 
+
+        <div class="row">
              <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="horaInicio"><b>Hora de inicio:</b></label>
@@ -68,10 +67,7 @@
                 @endif
 
             </div>
-        </div>
 
-
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="horaFin"><b>Hora de finalización:</b></label>
@@ -83,7 +79,10 @@
                 @endif
 
             </div>
+        </div>
 
+
+        <div class="row"> 
             <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="justificacion"><b>Justificación:</b></label>
@@ -94,9 +93,23 @@
                 @endif
 
             </div>
+
+        <div class="col-md-6">
+                <div class="form-group has-feedback">
+                    <label for="catalogo"><b>Razón del permiso:</b></label>
+                    <select class="form-control" id="catalogoPer" name="catalogo" >
+                            <option disabled selected>Razón del permiso</option>
+                            <option>Particular</option>
+                            <option>Calamidad doméstica</option>
+                            <option>Enfermedad</option>
+                            <option>Otro</option>
+                    </select>
+                @if($errors->has('catalogo'))
+                 <span style='color:red;'> {{ $errors->first('catalogo') }} </span>
+                @endif
+                </div>
+            </div>
         </div>
-
-
 
        
 

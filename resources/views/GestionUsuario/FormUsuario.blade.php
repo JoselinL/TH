@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-feedback">
-                <label for="cedula"><b>C.I:</b></label>
+                <label for="cedula"><b>C.C:</b></label>
                 <input type="text" class="form-control" placeholder="Ingrese la cedula de identidad" name="cedula" id="cedulaU" value="{{ old('cedula') }}"/>
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
@@ -111,8 +111,11 @@
              <div class="col-md-6">
                 <div class="form-group has-feedback">
                 <label for="nacionalidad"><b>Nacionalidad:</b></label>
-                <input type="text" class="form-control" placeholder="Ingrese la nacionalidad" name="nacionalidad" id="nacionalidadU" value="{{ old('nacionalidad') }}"/>
-                <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+                 <select class="form-control" id="nacionalidadU" name="nacionalidad" >
+                            <option disabled selected>Nacionalidad</option>
+                            <option>Ecuatoriana</option>
+                            <option>Otra</option>
+                 </select>
                 </div>
                 @if($errors->has('nacionalidad'))
                 <span style='color:red;'> {{ $errors->first('nacionalidad') }} </span>
@@ -268,6 +271,16 @@
                 </div>
                 @if($errors->has('sueldo'))
                 <span style='color:red;'> {{ $errors->first('sueldo') }} </span>
+                @endif
+            </div>
+
+             <div class="col-md-6">
+                <div class="form-group has-feedback">
+                <label for="fechaInicio"><b>Fecha de contratación:</b></label>
+                <input type="date" class="form-control" name="fechaInicio" id="fechaInicioU" value="{{ old('fechaInicio') }}"/>
+                </div>
+                @if($errors->has('fechaInicio'))
+                <span style='color:red;'> {{ $errors->first('fechaInicio') }} </span>
                 @endif
             </div>
         </div>

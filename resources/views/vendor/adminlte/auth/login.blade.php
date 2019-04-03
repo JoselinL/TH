@@ -26,8 +26,8 @@
         @endif
 
         
-        <div class="login-box-body" style="position:absolute; z-index:0; opacity: 0.8">
-        <p class="login-box-msg"> <center> <h3><b>Talento Humano </b></h3></center></p>
+        <div class="login-box-body" style="position:absolute; z-index:0; opacity: 0.8; width: 350px">
+        <p class="login-box-msg" style="padding: 0.1px; margin: 0.1px;"> <center> <h3><b>Talento Humano </b></h3></center></p>
         <form action="{{ url('/login') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             
@@ -43,23 +43,27 @@
 
 
             <div class="row">
-                <div class="col-xs-6">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
+                </div><!-- /.col -->
+            </div>
+
+            <div class="row">
+            <div class="col-xs-12">
                     <div class="checkbox icheck">
                         <label>
                             <input type="checkbox" name="remember"> Recordar contraseña
                         </label>
                     </div>
-                </div><!-- /.col -->
-                <div class="col-xs-6">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar sesión</button>
-                </div><!-- /.col -->
+                </div>
             </div>
             
         </form>
 
         @include('adminlte::auth.partials.social_login')
 
-        <a href="{{ url('/password/reset') }}">Olvidé mi contraseña</a><br>
+        
 
         <!--------------------------------------------------------------------------------------------->
         <!--

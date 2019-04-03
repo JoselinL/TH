@@ -112,14 +112,29 @@ function cargarPP(data){
  
     $("#tablaPP").append(
         "<tr id='fila_cod"+"'>\
-         <td>"+ data.cantidadDiasPeriodo+"</td>\
-         <td>"+ data.periodo.descripcion+"</td>\
-         <td>"+ data.usuario.nombres+"</td>\
-         <td class='row'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#actualizarPP' onClick='actualizarPP("+data.id+")'><i class='fa fa-refresh'></i></button></td>\
-         <td class='row'><button type='button' class='btn btn-danger' id='btn-confirm' onClick='eliminarPP("+data.id+")'><i class='fa fa-trash'></i></button></td>"
+         <td>"+ data.cedula+"</td>\
+         <td>"+ data.nombres+" "+ data.apellidos+"</td>\
+         <td>"+ data.suma+"</td>"
     );
 }
 
+$( "#B_PP" ).change(function() {
+   //alert($( "#dtpFecha" ).val());
+   $.get('buscarPP/'+$('#B_PP').val() , function (data) { //ruta que especifica que metodo ejecutar en resource
+              // limpia el tbody de la tabla
+              //alert(2); 
+              $('#tablaPP').html('');
+             $.each(data, function(i, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+               $("#tablaPP").append(
+                       "<tr id='"+item.id+"'>"+
+                       "<td>"+ item.cedula+"</td>"+
+                       "<td>"+ item.nombres+" "+ item.apellidos+"</td>"+
+                       "<td>"+ item.suma+"</td>"
+                );
+                
+         }); 
+    });
+});
 
 
 

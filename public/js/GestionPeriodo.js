@@ -10,7 +10,6 @@ function ingresarPeriodo(){
         fechaInicio: $('#fechaInicioPeri').val(),
         fechaFin: $('#fechaFinPeri').val(),
         estado: $('#estadoPeri').val(),
-        
     }
     
     $.ajaxSetup({

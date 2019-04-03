@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Periodo;
+use App\User;
+use App\PeriodoPersona;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Periodos extends Controller
 {
@@ -61,6 +64,18 @@ class Periodos extends Controller
                     $periodoM = Periodo::find($item->id);
                     $periodoM->estado = "Inactivo";
                     $periodoM->update();
+                }
+               
+            }
+            $usuarios=User::all();
+            foreach ($usuarios as $value) {
+                $edad = Carbon::parse($value->fechaInicio)->age; 
+                if ($edad >=1) {
+                    $periodo_persona=new PeriodoPersona();
+                $periodo_persona->periodo_id=$periodo->id;
+                $periodo_persona->user_id=$value->id;
+                $periodo_persona->cantidadDiasPeriodo=30;
+                $periodo_persona->save(); 
                 }
                
             }

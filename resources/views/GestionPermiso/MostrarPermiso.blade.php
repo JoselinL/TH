@@ -15,12 +15,14 @@
     <table class="table table-hover text-center">
       
            <thead>
+               <th scope="col">C.C.</th> 
                <th scope="col">Usuario</th>  
                <th scope="col">Descripción</th>      
                <th scope="col">Fecha Inicio</th>   
                <th scope="col">Fecha Fin</th>
                <th scope="col">Hora Inicio</th> 
                <th scope="col">Hora Fin</th> 
+               <th scope="col">Razón</th> 
                <th scope="col">Modificar</th>
                <th scope="col">Eliminar</th>
 
